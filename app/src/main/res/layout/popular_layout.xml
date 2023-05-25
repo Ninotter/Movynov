@@ -1,14 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="?attr/colorBackgroundFloating"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/android:statusBarColor"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <Button
+            android:id="@+id/btnSideBar"
+            android:layout_width="90px"
+            android:layout_height="90px"
+            android:background="?attr/colorSecondary"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Popular"
+            >
+        </TextView>
+    </androidx.appcompat.widget.Toolbar>
+
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Popular"
-        >
-    </TextView>
+        android:layout_below="@id/my_toolbar">
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/popular_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </RelativeLayout>
+
 
 
 </RelativeLayout>
