@@ -4,17 +4,21 @@ import com.projetb3.movynov.dataclasses.MediaMovie
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.navigation.NavigationView
 import com.google.gson.Gson
 import com.projetb3.movynov.R
 import com.projetb3.movynov.viewmodels.MainViewModel
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private val JsonTest = "[\n" +
             "        {\n" +
             "            \"adult\": false,\n" +
@@ -123,14 +127,28 @@ class MainActivity : AppCompatActivity() {
             "            \"vote_count\": 21708\n" +
             "        }]"
     private lateinit var mainViewModel : MainViewModel
+    private lateinit var drawerLayout : DrawerLayout
     private var movies : List<MediaMovie> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.popular_layout)
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        setSupportActionBar(findViewById(R.id.my_toolbar))
+        setSupportActionBar(findViewById(R.id.popular_toolbar))
         supportActionBar?.title = ""
+
+        /**
+         * Navigation Drawer
+         */
+        drawerLayout = findViewById(R.id.popular_drawer_layout)
+        val navigationView = findViewById<NavigationView>(R.id.popular_nav_view)
+        navigationView.setNavigationItemSelectedListener(this)
+
+        val toggle = ActionBarDrawerToggle(this, drawerLayout, findViewById(R.id.popular_toolbar), R.string.open_nav, R.string.close_nav)
+
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
         movies = Gson().fromJson(JsonTest, Array<MediaMovie>::class.java).toList()
 
         val recyclerView : RecyclerView = findViewById(R.id.popular_recycler)
@@ -144,6 +162,10 @@ class MainActivity : AppCompatActivity() {
         //}
         //})
 
+    }
+
+    public override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        TODO("Not yet implemented")
     }
 
     class MovieAdapter(private val movies : List<MediaMovie>) : RecyclerView.Adapter<MovieAdapter.ViewHolder>()
