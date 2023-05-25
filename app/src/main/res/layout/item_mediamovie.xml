@@ -14,24 +14,26 @@
         android:layout_marginStart="12dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/popular_recycler_movietitle"
+                android:textSize="30dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="50px"
+                android:layout_marginRight="8dp"
                 android:text="title"/>
 
             <TextView
                 android:id="@+id/popular_recycler_movieoverview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/popular_recycler_movietitle"
                 android:text="overview"
                 />
 
-        </LinearLayout>
+        </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </androidx.appcompat.widget.LinearLayoutCompat>
