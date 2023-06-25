@@ -7,6 +7,23 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
+    <string name="navbar_popular">Popular</string>
+    <string name="navbar_watchlist">Watchlist</string>
+    <string name="navbar_forum">Forum</string>
+    <string name="navbar_settings">Settings</string>
+    <string name="navbar_login">Login</string>
+    <string name="navbar_logout">Log out</string>
+
+    <string name="addtowatchlist">Add to watchlist</string>
+    <string name="addedtowatchlist">Added to watchlist!</string>
+
+    <string name="removefromwatchlist">Remove from watchlist</string>
+    <string name="removedfromwatchlist">Removed from watchlist!</string>
+
+
+
+
+
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="open_nav">Open Navigation Drawer</string>

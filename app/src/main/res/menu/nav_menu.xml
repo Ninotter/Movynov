@@ -6,24 +6,31 @@
     <group
         android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_home"
-            android:title="Home"/>
+            android:id="@+id/nav_popular"
+            android:title="@string/navbar_popular"/>
+        <item
+            android:id="@+id/nav_watchlist"
+            android:title="@string/navbar_watchlist"/>
+        <item
+            android:id="@+id/nav_forum"
+            android:title="@string/navbar_forum"/>
         <item
             android:id="@+id/nav_settings"
-            android:title="Settings"/>
-        <item
-            android:id="@+id/nav_share"
-            android:title="Share"/>
-        <item
-            android:id="@+id/nav_about"
-            android:title="About Us"/>
+            android:title="@string/navbar_settings"/>
     </group>
     <item
-        android:title="">
+        android:title=""
+        >
         <menu>
             <item
+                android:id="@+id/nav_login"
+                android:title="@string/navbar_login"/>
+            <item
+                android:id="@+id/nav_username"
+                android:title="TODO_USERNAME"/>
+            <item
                 android:id="@+id/nav_logout"
-                android:title="Logout"/>
+                android:title="@string/navbar_logout"/>
         </menu>
     </item>
 </menu>
