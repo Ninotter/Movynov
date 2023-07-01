@@ -18,7 +18,10 @@ class PopularAdapter(private val mediaMoviesList: List<MediaMovie>) : RecyclerVi
         holder.movieTitleTextView.text = mediaMoviesList[position].title
         holder.movieLayout.background = mediaMoviesList[position].backdropImage
         holder.movieOverviewTextView.text = mediaMoviesList[position].overview
-        holder.movieReleaseDateTextView.text = mediaMoviesList[position].releaseDate
+        val yearReleaseDate = mediaMoviesList[position].releaseDate?.substring(0, 4)
+        holder.movieReleaseDateTextView.text = yearReleaseDate
+        holder.movieRatingTextView.text = mediaMoviesList[position].voteAverage.toString() + "\uD83C\uDF1F"
+
     }
 
     override fun getItemCount(): Int {

@@ -34,47 +34,73 @@
             android:id="@+id/movie_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:lines="1"
-            android:text="Title: the Movie"
-            app:layout_constraintStart_toEndOf="@+id/movie_poster"
-            app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
+            android:ellipsize="end"
+            android:lines="1"
+            android:maxWidth="260dp"
             android:maxLines="5"
-            />
+            android:text="Title: the Movie"
+            app:layout_constraintStart_toEndOf="@+id/movie_poster"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/movie_release_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
             android:gravity="center"
             android:lines="1"
             android:text="1997"
-
             app:layout_constraintBottom_toBottomOf="@+id/movie_title"
-            app:layout_constraintStart_toEndOf="@+id/movie_title"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
+            android:id="@+id/movie_vote_average"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="10dp"
+            android:lines="1"
+            android:text="4.3/5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/movie_release_date"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
             android:id="@+id/movie_overview"
-            android:layout_width="300dp"
+            android:layout_width="260dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
+            android:ellipsize="end"
             android:lines="5"
             android:text="lorem ipsum overview movie"
             app:layout_constraintStart_toEndOf="@+id/movie_poster"
             app:layout_constraintTop_toBottomOf="@+id/movie_title" />
+
+        <Button
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="+"
+app:layout_constraintBottom_toBottomOf="@+id/movie_overview"
+
+
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
