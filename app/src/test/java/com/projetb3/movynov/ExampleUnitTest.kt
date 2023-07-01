@@ -1,5 +1,8 @@
 package com.projetb3.movynov
 
+import com.projetb3.movynov.dataclasses.MediaMovie
+import com.projetb3.movynov.repository.ApiCall
+import org.junit.Assert
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -13,5 +16,11 @@ class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)
+    }
+
+    @Test
+    fun MovieList_isNotEmpty(){
+        val movies : List<MediaMovie> = ApiCall().getPopularMovies()
+        assertTrue(movies.isNotEmpty())
     }
 }
