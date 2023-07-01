@@ -23,4 +23,10 @@ class ExampleUnitTest {
         val movies : List<MediaMovie> = ApiCall().getPopularMovies()
         assertTrue(movies.isNotEmpty())
     }
+
+    @Test
+    fun Movie_isNotEmpty(){
+        val movie : MediaMovie = ApiCall().getMovieById(550)
+        assertTrue(movie.title != null)
+    }
 }

@@ -15,7 +15,7 @@ import java.util.Date
 class MediaMovie(
     @SerializedName("adult"                 ) var adult               : Boolean?                       = null,
     @SerializedName("backdrop_path"         ) var backdropPath        : String?                        = null,
-    @SerializedName("belongs_to_collection" ) var belongsToCollection : String?                        = null,
+    //@SerializedName("belongs_to_collection" ) var belongsToCollection : String?                        = null,
     @SerializedName("budget"                ) var budget              : Int?                           = null,
     @SerializedName("homepage"              ) var homepage            : String?                        = null,
     @SerializedName("id"                    ) var id                  : Int?                           = null,
