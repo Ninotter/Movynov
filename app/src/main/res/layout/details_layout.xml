@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:indeterminate="true"
+        android:background="@color/black"
         tools:visibility="invisible" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,6 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
+        android:background="@color/black"
         tools:visibility="visible">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -64,7 +66,7 @@
                 app:layout_constraintStart_toEndOf="@id/details_movie_vote_average"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/details_movie_poster_card"
                 android:layout_width="120dp"
                 android:layout_height="180dp"
@@ -75,6 +77,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:cardCornerRadius="10dp"
+                app:strokeWidth="2dp"
+                app:strokeColor="@color/black"
                 >
 
                 <ImageView
@@ -83,7 +87,7 @@
                     android:layout_height="match_parent"
                      />
 
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
 
             <TextView
@@ -130,7 +134,7 @@
             android:ellipsize="end"
             />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/details_movies_button_forum"
             android:layout_width="260dp"
             android:layout_height="50dp"
@@ -151,6 +155,7 @@
             app:layout_constraintTop_toBottomOf="@id/details_movies_button_forum"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            style="@style/Theme.Movynov"
             />
 
         <androidx.recyclerview.widget.RecyclerView

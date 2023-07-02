@@ -1,68 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-<androidx.drawerlayout.widget.DrawerLayout
-
-
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/popular_drawer_layout"
-    android:fitsSystemWindows="true"
-    tools:openDrawer="start">
-
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.drawerlayout.widget.DrawerLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context=".activities.PopularActivity"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?attr/colorBackgroundFloating"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
-
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/popular_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/android:statusBarColor"
-            android:elevation="4dp"
-            android:theme="@style/Theme.Movynov"
-            app:popupTheme="@style/Theme.Movynov">
-
-            <Button
-                android:id="@+id/btnSideBar"
-                android:layout_width="90px"
-                android:layout_height="90px"
-                android:background="?attr/colorSecondary"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Popular"
-                android:textSize="30dp"
-                />
-        </androidx.appcompat.widget.Toolbar>
+        android:id="@+id/popular_drawer_layout"
+        android:fitsSystemWindows="true"
+        tools:openDrawer="start">
 
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/popular_toolbar"
-            android:background="@color/bisque">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/popular_recycler"
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/popular_toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                android:elevation="4dp">
+
+                <Button
+                    android:id="@+id/btnSideBar"
+                    android:layout_width="90px"
+                    android:layout_height="90px"
+                    android:background="?attr/colorSecondary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Popular"
+                    android:textSize="30dp" />
+            </androidx.appcompat.widget.Toolbar>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/popular_toolbar">
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/popular_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </RelativeLayout>
+
         </RelativeLayout>
 
-    </RelativeLayout>
-
-    <com.google.android.material.navigation.NavigationView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:id="@+id/popular_nav_view"
-        android:layout_gravity="start"
-        app:menu="@menu/nav_menu"
-        app:itemIconTint="@color/lavender"
-        app:itemTextColor="@color/lavender"/>
-</androidx.drawerlayout.widget.DrawerLayout>
-</layout>
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/popular_nav_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            app:itemIconTint="@color/lavender"
+            app:itemTextColor="@color/lavender"
+            app:menu="@menu/nav_menu" />
+    </androidx.drawerlayout.widget.DrawerLayout>

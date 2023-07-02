@@ -1,5 +1,6 @@
 package com.projetb3.movynov.activities
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
@@ -16,6 +17,7 @@ import com.projetb3.movynov.dataclasses.watchproviders.Flatrate
 import com.projetb3.movynov.repository.ApiCall
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import okhttp3.internal.toHexString
 import java.lang.Exception
 
 
@@ -32,13 +34,14 @@ class MovieDetailActivity() : AppCompatActivity() {
             movie = fetchMovieDetails(idMovie)
             movie.updatePosterImageFullResolution()
             movie.updateBackDropImageFullResolution()
+            //setting up watch providers for recyclerview
             for(flatrate: Flatrate in movie.watchProviders?.results?.FR?.flatrate!!){
                 if (flatrate.logoPath != null){
                     flatrate.loadLogoImage()
                 }
             }
+
             runOnUiThread(Runnable {
-                //TODO
                 //Inflate data...
                 inflateData()
                 findViewById<ProgressBar>(R.id.progress_bar_details).visibility = View.GONE;
@@ -49,9 +52,14 @@ class MovieDetailActivity() : AppCompatActivity() {
 
 
     private fun inflateData(){
-        //TODO
         findViewById<TextView>(R.id.details_movie_title).text = movie.title
-        findViewById<TextView>(R.id.details_movie_vote_average).text = (movie.voteAverage!! * 10).toString() + "%"
+        findViewById<TextView>(R.id.details_movie_vote_average).text = movie.voteAverage.toString() + "\uD83C\uDF1F"
+        //Sets the color of the rating depending on the value
+        if (movie.voteAverage != null){
+            val color = Color.rgb(255 - (movie.voteAverage!! * 255 / 10).toInt(), (movie.voteAverage!! * 255 / 10).toInt(), 0)
+            findViewById<TextView>(R.id.details_movie_vote_average).setTextColor(color)
+            findViewById<TextView>(R.id.details_user_score_label).setTextColor(color)
+        }
         //change text of rating color mapping red to green
         findViewById<ImageView>(R.id.details_movie_backdrop).background = movie.backdropImage
         findViewById<ImageView>(R.id.details_movie_backdrop).alpha = 0.8f
@@ -87,9 +95,8 @@ class MovieDetailActivity() : AppCompatActivity() {
         recyclerView.adapter = watchProvidersAdapter
     }
 
-    private fun fetchMovieDetails(idMovie: Int) : MediaMovie {
-        val movie = ApiCall().getMovieAndWatchProvidersById(idMovie)
-        return movie
+    private fun fetchMovieDetails(idMovie: Int): MediaMovie {
+        return ApiCall().getMovieAndWatchProvidersById(idMovie)
     }
 
     override fun onBackPressed() {
