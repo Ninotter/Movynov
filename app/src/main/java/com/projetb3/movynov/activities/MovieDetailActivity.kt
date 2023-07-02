@@ -1,8 +1,5 @@
 package com.projetb3.movynov.activities
 
-import android.annotation.SuppressLint
-import android.content.Intent
-import android.graphics.Movie
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
@@ -10,12 +7,12 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
-import androidx.navigation.Navigation
-import androidx.navigation.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.projetb3.movynov.R
+import com.projetb3.movynov.activities.adapters.WatchProvidersAdapter
 import com.projetb3.movynov.dataclasses.MediaMovie
+import com.projetb3.movynov.dataclasses.watchproviders.Flatrate
 import com.projetb3.movynov.repository.ApiCall
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -35,6 +32,11 @@ class MovieDetailActivity() : AppCompatActivity() {
             movie = fetchMovieDetails(idMovie)
             movie.updatePosterImageFullResolution()
             movie.updateBackDropImageFullResolution()
+            for(flatrate: Flatrate in movie.watchProviders?.results?.FR?.flatrate!!){
+                if (flatrate.logoPath != null){
+                    flatrate.loadLogoImage()
+                }
+            }
             runOnUiThread(Runnable {
                 //TODO
                 //Inflate data...
@@ -71,11 +73,23 @@ class MovieDetailActivity() : AppCompatActivity() {
         }catch(e:Exception){
             findViewById<TextView>(R.id.details_movie_genres).isVisible = false
         }
+        if (movie.watchProviders?.results?.FR?.flatrate != null){
+            inflateRecycler(movie.watchProviders?.results?.FR?.flatrate!!)
+        }else{
+            findViewById<TextView>(R.id.popular_recycler).visibility = View.GONE
+        }
+    }
 
+    private fun inflateRecycler(flatrates : List<Flatrate>){
+        val watchProvidersAdapter = WatchProvidersAdapter(flatrates)
+        val recyclerView = findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.details_movie_platforms_recyclerview)
+        recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        recyclerView.adapter = watchProvidersAdapter
     }
 
     private fun fetchMovieDetails(idMovie: Int) : MediaMovie {
-        return ApiCall().getMovieAndWatchProvidersById(idMovie)
+        val movie = ApiCall().getMovieAndWatchProvidersById(idMovie)
+        return movie
     }
 
     override fun onBackPressed() {
