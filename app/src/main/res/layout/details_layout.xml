@@ -6,4 +6,166 @@
     android:layout_height="match_parent"
     tools:context=".activities.MovieDetailActivity">
 
+    <ProgressBar
+        android:id="@+id/progress_bar_details"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:indeterminate="true"
+        tools:visibility="invisible" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/details_layout_without_progressbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/details_banner_layout"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/details_movie_backdrop"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+
+                />
+
+            <TextView
+                android:id="@+id/details_movie_vote_average"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="7.8🌟"
+                android:textSize="20dp"
+                android:textColor="@color/white"
+                android:shadowRadius="5"
+                android:shadowColor="@color/black"
+                android:shadowDx="2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/details_user_score_label"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text=" user score"
+                android:textSize="20dp"
+                android:textColor="@color/white"
+                android:shadowRadius="5"
+                android:shadowColor="@color/black"
+                android:shadowDx="2"
+                app:layout_constraintStart_toEndOf="@id/details_movie_vote_average"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/details_movie_poster_card"
+                android:layout_width="120dp"
+                android:layout_height="180dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:cardCornerRadius="10dp"
+                >
+
+                <ImageView
+                    android:id="@+id/details_movie_poster"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                     />
+
+            </androidx.cardview.widget.CardView>
+
+
+            <TextView
+                android:id="@+id/details_movie_title"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:ellipsize="end"
+                android:letterSpacing="0.2"
+                android:maxWidth="350dp"
+                android:maxLines="1"
+                android:text="Title: the Movieeee"
+                android:textStyle="italic"
+                android:textColor="@color/white"
+                android:textSize="30dp"
+                android:shadowRadius="8"
+                android:shadowColor="@color/black"
+                android:shadowDx="2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/details_movie_release_date_and_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@id/details_banner_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="2020-02-02 | 2h 30m"
+            />
+
+        <TextView
+            android:id="@+id/details_movie_genres"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/details_movie_release_date_and_duration"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="Action, Adventure, Comédie"
+            android:maxLines="1"
+            android:maxWidth="350dp"
+            android:ellipsize="end"
+            />
+
+        <Button
+            android:id="@+id/details_movies_button_forum"
+            android:layout_width="260dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:text="Posts du forum liés au film"
+            android:textSize="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/details_movie_genres" />
+
+        <TextView
+            android:id="@+id/details_movie_platforms_text"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Disponible sur :"
+            android:textSize="15dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/details_movies_button_forum"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/details_movie_platforms_recyclerview"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/details_movie_platforms_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:orientation="horizontal"
+            />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

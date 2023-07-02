@@ -39,4 +39,18 @@ class ApiCall {
             return movie
         }
     }
+
+    public fun getMovieAndWatchProvidersById(id : Int) : MediaMovie {
+        val request = Request.Builder()
+            .url(baseUrl + "movie/" + id + "?" + apiKey + "&append_to_response=watch/providers")
+            .build()
+
+        var movie = MediaMovie()
+        client.newCall(request).execute().use { response ->
+            if (!response.isSuccessful) throw IOException("Unexpected code $response")
+
+            movie = Gson().fromJson(response.body!!.string(), MediaMovie::class.java)
+            return movie
+        }
+    }
 }

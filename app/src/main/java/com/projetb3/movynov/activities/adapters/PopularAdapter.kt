@@ -21,7 +21,6 @@ class PopularAdapter(
     override fun onBindViewHolder(holder: PopularViewHolder, position: Int) {
         holder.moviePosterImageView.background = mediaMoviesList[position].posterImage
         holder.movieTitleTextView.text = mediaMoviesList[position].title
-        holder.movieLayout.background = mediaMoviesList[position].backdropImage
         holder.movieOverviewTextView.text = mediaMoviesList[position].overview
         val yearReleaseDate = mediaMoviesList[position].releaseDate?.substring(0, 4)
         holder.movieReleaseDateTextView.text = yearReleaseDate

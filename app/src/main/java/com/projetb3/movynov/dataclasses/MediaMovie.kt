@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import com.google.gson.annotations.SerializedName
+import com.projetb3.movynov.dataclasses.watchproviders.WatchProviders
 import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.URL
@@ -17,6 +18,7 @@ class MediaMovie(
     @SerializedName("backdrop_path"         ) var backdropPath        : String?                        = null,
     //@SerializedName("belongs_to_collection" ) var belongsToCollection : String?                        = null,
     @SerializedName("budget"                ) var budget              : Int?                           = null,
+    @SerializedName("genres"                ) var genres              : ArrayList<Genres>              = arrayListOf(),
     @SerializedName("homepage"              ) var homepage            : String?                        = null,
     @SerializedName("id"                    ) var id                  : Int?                           = null,
     @SerializedName("imdb_id"               ) var imdbId              : String?                        = null,
@@ -33,7 +35,8 @@ class MediaMovie(
     @SerializedName("title"                 ) var title               : String?                        = null,
     @SerializedName("video"                 ) var video               : Boolean?                       = null,
     @SerializedName("vote_average"          ) var voteAverage         : Double?                        = null,
-    @SerializedName("vote_count"            ) var voteCount           : Int?                           = null
+    @SerializedName("vote_count"            ) var voteCount           : Int?                           = null,
+    @SerializedName("watch/providers"       ) var watchProviders     : WatchProviders?               = WatchProviders()
 ){
     var posterImage : Drawable? = null
     var backdropImage : Drawable? = null

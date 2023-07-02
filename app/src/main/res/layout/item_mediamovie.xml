@@ -42,6 +42,7 @@
             android:lines="1"
             android:maxWidth="260dp"
             android:maxLines="5"
+            android:textStyle="bold"
             android:text="Title: the Movie"
             app:layout_constraintStart_toEndOf="@+id/movie_poster"
             app:layout_constraintTop_toTopOf="parent" />

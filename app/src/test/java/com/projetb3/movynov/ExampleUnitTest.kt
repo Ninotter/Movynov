@@ -26,7 +26,7 @@ class ExampleUnitTest {
 
     @Test
     fun Movie_isNotEmpty(){
-        val movie : MediaMovie = ApiCall().getMovieById(550)
+        val movie : MediaMovie = ApiCall().getMovieAndWatchProvidersById(315162)
         assertTrue(movie.title != null)
     }
 }
