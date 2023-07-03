@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import com.google.gson.annotations.SerializedName
+import com.projetb3.movynov.dataclasses.credits.Credits
 import com.projetb3.movynov.dataclasses.watchproviders.WatchProviders
 import java.io.IOException
 import java.net.HttpURLConnection
@@ -36,7 +37,8 @@ class MediaMovie(
     @SerializedName("video"                 ) var video               : Boolean?                       = null,
     @SerializedName("vote_average"          ) var voteAverage         : Double?                        = null,
     @SerializedName("vote_count"            ) var voteCount           : Int?                           = null,
-    @SerializedName("watch/providers"       ) var watchProviders     : WatchProviders?               = WatchProviders()
+    @SerializedName("watch/providers"       ) var watchProviders     : WatchProviders?               = WatchProviders(),
+    @SerializedName("credits"               ) var credits             : Credits?                       = Credits()
 ){
     var posterImage : Drawable? = null
     var backdropImage : Drawable? = null

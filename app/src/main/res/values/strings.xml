@@ -25,4 +25,8 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="open_nav">Open Navigation Drawer</string>
     <string name="close_nav">Close Navigation Drawer</string>
+    <string name="tetes_d_affiche">Têtes d\'affiche :</string>
+    <string name="watchproviders_availabaible_on">Disponible sur :</string>
+    <string name="forum_posts_related_to_movie">Posts du forum liés au film</string>
+    <string name="cast_item_playing_as">Dans le rôle de :</string>
 </resources>

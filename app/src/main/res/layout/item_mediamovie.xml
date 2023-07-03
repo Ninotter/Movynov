@@ -8,9 +8,12 @@
     android:padding="8dp"
     android:clickable="true"
     android:layout_width="match_parent"
-    android:layout_height="130dp"
+    android:layout_height="140dp"
     android:focusable="true"
     android:layout_margin="8dp"
+    android:layout_marginTop="12dp"
+    android:layout_marginBottom="12dp"
+
     >
 
 
@@ -86,15 +89,14 @@
             app:layout_constraintStart_toEndOf="@+id/movie_poster"
             app:layout_constraintTop_toBottomOf="@+id/movie_title" />
 
-        <Button
+        <ImageView
             android:id="@+id/movie_add_watchlist"
             android:layout_width="30dp"
             android:layout_height="30dp"
-
+            app:srcCompat="@drawable/add_to_watchlist_button"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             app:layout_constraintEnd_toEndOf="parent"
-            android:text="+"
 app:layout_constraintBottom_toBottomOf="@+id/movie_overview"
 
 

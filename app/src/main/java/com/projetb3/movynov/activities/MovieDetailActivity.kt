@@ -1,6 +1,7 @@
 package com.projetb3.movynov.activities
 
 import android.graphics.Color
+import android.graphics.Paint
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
@@ -10,15 +11,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.projetb3.movynov.R
+import com.projetb3.movynov.activities.adapters.CreditsAdapter
 import com.projetb3.movynov.activities.adapters.WatchProvidersAdapter
 import com.projetb3.movynov.dataclasses.MediaMovie
+import com.projetb3.movynov.dataclasses.credits.Cast
+import com.projetb3.movynov.dataclasses.credits.Credits
 import com.projetb3.movynov.dataclasses.watchproviders.Flatrate
 import com.projetb3.movynov.repository.ApiCall
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import okhttp3.internal.toHexString
-import java.lang.Exception
 
 
 class MovieDetailActivity() : AppCompatActivity() {
@@ -38,6 +41,11 @@ class MovieDetailActivity() : AppCompatActivity() {
             for(flatrate: Flatrate in movie.watchProviders?.results?.FR?.flatrate!!){
                 if (flatrate.logoPath != null){
                     flatrate.loadLogoImage()
+                }
+            }
+            for(cast: Cast in movie.credits?.cast!!){
+                if (cast.profilePath != null){
+                    cast.loadProfileImage()
                 }
             }
 
@@ -62,15 +70,19 @@ class MovieDetailActivity() : AppCompatActivity() {
         }
         //change text of rating color mapping red to green
         findViewById<ImageView>(R.id.details_movie_backdrop).background = movie.backdropImage
-        findViewById<ImageView>(R.id.details_movie_backdrop).alpha = 0.8f
+        findViewById<ImageView>(R.id.details_movie_backdrop).alpha = 0.6f
         findViewById<ImageView>(R.id.details_movie_poster).background = movie.posterImage
+        findViewById<TextView>(R.id.details_movie_tagline).text = movie.tagline
+        //underline tagline
+        findViewById<TextView>(R.id.details_movie_tagline).paintFlags = findViewById<TextView>(R.id.details_movie_tagline).paintFlags or Paint.UNDERLINE_TEXT_FLAG
+        findViewById<TextView>(R.id.details_movie_overview).text = movie.overview
         try{
             val year = movie.releaseDate!!.substring(0, 4)
             val hours = movie.runtime!! / 60
             val minutes = movie.runtime!! % 60
             findViewById<TextView>(R.id.details_movie_release_date_and_duration).text = "$year | $hours h $minutes min"
         }catch(e:Exception){
-            findViewById<TextView>(R.id.details_movie_release_date_and_duration).isVisible = false
+            findViewById<TextView>(R.id.details_movie_release_date_and_duration).visibility = View.GONE
         }
         try{
             var genres = ""
@@ -81,22 +93,37 @@ class MovieDetailActivity() : AppCompatActivity() {
         }catch(e:Exception){
             findViewById<TextView>(R.id.details_movie_genres).isVisible = false
         }
-        if (movie.watchProviders?.results?.FR?.flatrate != null){
-            inflateRecycler(movie.watchProviders?.results?.FR?.flatrate!!)
+        if (movie.watchProviders?.results?.FR?.flatrate != null && movie.watchProviders?.results?.FR?.flatrate!!.isNotEmpty()){
+            inflateWatchProvidersRecycler(movie.watchProviders?.results?.FR?.flatrate!!)
         }else{
-            findViewById<TextView>(R.id.popular_recycler).visibility = View.GONE
+            findViewById<RecyclerView>(R.id.details_movie_platforms_recyclerview).visibility = View.GONE
+            findViewById<TextView>(R.id.details_movie_platforms_text).visibility = View.GONE
+        }
+
+        if (movie.credits?.cast != null && movie.credits?.cast!!.isNotEmpty()){
+            inflateCreditsRecycler(movie.credits?.cast!!)
+        }else{
+            findViewById<RecyclerView>(R.id.details_movie_platforms_recyclerview).visibility = View.GONE
+            findViewById<TextView>(R.id.details_movie_platforms_text).visibility = View.GONE
         }
     }
 
-    private fun inflateRecycler(flatrates : List<Flatrate>){
+    private fun inflateWatchProvidersRecycler(flatrates : List<Flatrate>){
         val watchProvidersAdapter = WatchProvidersAdapter(flatrates)
         val recyclerView = findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.details_movie_platforms_recyclerview)
         recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         recyclerView.adapter = watchProvidersAdapter
     }
 
+    private fun inflateCreditsRecycler(cast : List<Cast>){
+        val creditsAdapter = CreditsAdapter(cast)
+        val recyclerView = findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.details_movie_cast_recyclerview)
+        recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        recyclerView.adapter = creditsAdapter
+    }
+
     private fun fetchMovieDetails(idMovie: Int): MediaMovie {
-        return ApiCall().getMovieAndWatchProvidersById(idMovie)
+        return ApiCall().getMovieAndWatchProvidersAndCreditsById(idMovie)
     }
 
     override fun onBackPressed() {

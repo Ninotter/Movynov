@@ -15,5 +15,5 @@ class PopularViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
     val movieOverviewTextView : TextView = itemView.findViewById(R.id.movie_overview)
     val movieReleaseDateTextView : TextView = itemView.findViewById(R.id.movie_release_date)
     val movieRatingTextView : TextView = itemView.findViewById(R.id.movie_vote_average)
-    val addToWatchListButton : Button = itemView.findViewById(R.id.movie_add_watchlist)
+    val addToWatchListButton : ImageView = itemView.findViewById(R.id.movie_add_watchlist)
 }
