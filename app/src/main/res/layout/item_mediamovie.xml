@@ -10,6 +10,7 @@
     android:layout_width="match_parent"
     android:layout_height="130dp"
     android:focusable="true"
+    android:layout_margin="8dp"
     >
 
 
@@ -51,36 +52,31 @@
             android:id="@+id/movie_release_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginTop="30dp"
             android:layout_marginEnd="10dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             android:gravity="center"
             android:lines="1"
             android:text="1997"
-            app:layout_constraintBottom_toBottomOf="@+id/movie_title"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/movie_vote_average"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop = "10dp"
             android:gravity="center"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginEnd="10dp"
             android:lines="1"
             android:text="4.3/5"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/movie_overview"
             app:layout_constraintTop_toBottomOf="@id/movie_release_date"
-            app:layout_constraintVertical_bias="0.0" />
+            />
 
         <TextView
             android:id="@+id/movie_overview"
-            android:layout_width="260dp"
+            android:layout_width="240dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
