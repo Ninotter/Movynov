@@ -68,6 +68,20 @@ class ApiCall {
         }
     }
 
+    public fun getMovieAndWatchProvidersAndCreditsAndVideosById(id : Int) : MediaMovie {
+        val request = Request.Builder()
+            .url(baseUrl + "movie/" + id + "?" + apiKey + "&language=fr-Fr" + "&append_to_response=watch/providers,credits,videos")
+            .build()
+
+        var movie = MediaMovie()
+        client.newCall(request).execute().use { response ->
+            if (!response.isSuccessful) throw IOException("Unexpected code $response")
+
+            movie = Gson().fromJson(response.body!!.string(), MediaMovie::class.java)
+            return movie
+        }
+    }
+
     public fun getRelatedMoviesById(id : Int) : List<MediaMovie> {
         val request = Request.Builder()
             .url(baseUrl + "movie/" + id + "/recommendations?" + apiKey + "&language=fr-Fr")
