@@ -185,7 +185,6 @@ class MovieDetailActivity() : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        //todo implement navigation, go back to previous activity
         finish()
     }
 }
