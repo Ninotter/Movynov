@@ -85,7 +85,7 @@ class MovieDetailActivity() : AppCompatActivity() {
         findViewById<ImageView>(R.id.details_movie_backdrop).background = movie.backdropImage
         findViewById<ImageView>(R.id.details_movie_backdrop).alpha = 0.6f
         findViewById<ImageView>(R.id.details_movie_poster).background = movie.posterImage
-        findViewById<TextView>(R.id.details_movie_tagline).text = movie.tagline
+        findViewById<TextView>(R.id.details_movie_tagline).text = "-"+ movie.tagline
         //underline tagline
         findViewById<TextView>(R.id.details_movie_tagline).paintFlags = findViewById<TextView>(R.id.details_movie_tagline).paintFlags or Paint.UNDERLINE_TEXT_FLAG
         findViewById<TextView>(R.id.details_movie_overview).text = movie.overview
