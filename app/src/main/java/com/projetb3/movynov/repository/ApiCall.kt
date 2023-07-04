@@ -67,4 +67,18 @@ class ApiCall {
             return movie
         }
     }
+
+    public fun getRelatedMoviesById(id : Int) : List<MediaMovie> {
+        val request = Request.Builder()
+            .url(baseUrl + "movie/" + id + "/recommendations?" + apiKey + "&language=fr-Fr")
+            .build()
+
+        var mediaMovieList = MediaMovieList()
+        client.newCall(request).execute().use { response ->
+            if (!response.isSuccessful) throw IOException("Unexpected code $response")
+
+            mediaMovieList = Gson().fromJson(response.body!!.string(), MediaMovieList::class.java)
+            return mediaMovieList.results
+        }
+    }
 }

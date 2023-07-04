@@ -1,5 +1,6 @@
 package com.projetb3.movynov.activities
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.Paint
 import android.os.Bundle
@@ -7,6 +8,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
@@ -14,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.projetb3.movynov.R
 import com.projetb3.movynov.activities.adapters.CreditsAdapter
+import com.projetb3.movynov.activities.adapters.PopularAdapter
 import com.projetb3.movynov.activities.adapters.WatchProvidersAdapter
 import com.projetb3.movynov.dataclasses.MediaMovie
 import com.projetb3.movynov.dataclasses.credits.Cast
@@ -26,6 +29,7 @@ import kotlinx.coroutines.launch
 
 class MovieDetailActivity() : AppCompatActivity() {
     private lateinit var movie: MediaMovie
+    private lateinit var recommandations : List<MediaMovie>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,8 +39,13 @@ class MovieDetailActivity() : AppCompatActivity() {
 
         GlobalScope.launch {
             movie = fetchMovieDetails(idMovie)
+            recommandations = fetchRecommendations(idMovie)
+            //downloads image from path
             movie.updatePosterImageFullResolution()
             movie.updateBackDropImageFullResolution()
+            for (mediaMovie in recommandations) {
+                mediaMovie.updatePosterImage()
+            }
             //setting up watch providers for recyclerview
             for(flatrate: Flatrate in movie.watchProviders?.results?.FR?.flatrate!!){
                 if (flatrate.logoPath != null){
@@ -56,6 +65,10 @@ class MovieDetailActivity() : AppCompatActivity() {
                 findViewById<ConstraintLayout>(R.id.details_layout_without_progressbar).visibility = View.VISIBLE
             })
         }
+    }
+
+    private fun fetchRecommendations(idMovie: Int): List<MediaMovie> {
+        return ApiCall().getRelatedMoviesById(idMovie)
     }
 
 
@@ -106,6 +119,7 @@ class MovieDetailActivity() : AppCompatActivity() {
             findViewById<RecyclerView>(R.id.details_movie_platforms_recyclerview).visibility = View.GONE
             findViewById<TextView>(R.id.details_movie_platforms_text).visibility = View.GONE
         }
+        inflateRecommandationsRecycler(recommandations)
     }
 
     private fun inflateWatchProvidersRecycler(flatrates : List<Flatrate>){
@@ -120,6 +134,25 @@ class MovieDetailActivity() : AppCompatActivity() {
         val recyclerView = findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.details_movie_cast_recyclerview)
         recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         recyclerView.adapter = creditsAdapter
+    }
+
+    private fun inflateRecommandationsRecycler(movies : List<MediaMovie>){
+        val recommandationsAdapter = PopularAdapter(movies, ::navigateToMovieDetails, ::addToWatchList)
+        val recyclerView = findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.details_movie_recommandations_recyclerview)
+        recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        recyclerView.adapter = recommandationsAdapter
+    }
+
+    public fun addToWatchList(movie : MediaMovie){
+        //TODO
+        Toast.makeText(this, "Added to watchlist", Toast.LENGTH_SHORT).show()
+    }
+
+    public fun navigateToMovieDetails(id : Int){
+        //TODO
+        val intent = Intent(this, MovieDetailActivity::class.java)
+        intent.putExtra("id", id)
+        startActivity(intent)
     }
 
     private fun fetchMovieDetails(idMovie: Int): MediaMovie {
