@@ -1,9 +1,12 @@
 package com.projetb3.movynov.activities
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Paint
+import android.net.Uri
 import android.os.Bundle
+import android.provider.LiveFolders.INTENT
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -17,10 +20,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.projetb3.movynov.R
 import com.projetb3.movynov.activities.adapters.CreditsAdapter
 import com.projetb3.movynov.activities.adapters.PopularAdapter
+import com.projetb3.movynov.activities.adapters.TrailersAdapter
 import com.projetb3.movynov.activities.adapters.WatchProvidersAdapter
 import com.projetb3.movynov.dataclasses.MediaMovie
 import com.projetb3.movynov.dataclasses.credits.Cast
 import com.projetb3.movynov.dataclasses.credits.Credits
+import com.projetb3.movynov.dataclasses.videos.VideoResults
 import com.projetb3.movynov.dataclasses.watchproviders.Flatrate
 import com.projetb3.movynov.repository.ApiCall
 import kotlinx.coroutines.GlobalScope
@@ -30,6 +35,7 @@ import kotlinx.coroutines.launch
 class MovieDetailActivity() : AppCompatActivity() {
     private lateinit var movie: MediaMovie
     private lateinit var recommandations : List<MediaMovie>
+    private lateinit var lastActivity : AppCompatActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,9 +91,13 @@ class MovieDetailActivity() : AppCompatActivity() {
         findViewById<ImageView>(R.id.details_movie_backdrop).background = movie.backdropImage
         findViewById<ImageView>(R.id.details_movie_backdrop).alpha = 0.6f
         findViewById<ImageView>(R.id.details_movie_poster).background = movie.posterImage
-        findViewById<TextView>(R.id.details_movie_tagline).text = "-"+ movie.tagline
-        //underline tagline
-        findViewById<TextView>(R.id.details_movie_tagline).paintFlags = findViewById<TextView>(R.id.details_movie_tagline).paintFlags or Paint.UNDERLINE_TEXT_FLAG
+        if (movie.tagline != ""){
+            findViewById<TextView>(R.id.details_movie_tagline).text = "-"+ movie.tagline
+            //underline tagline
+            findViewById<TextView>(R.id.details_movie_tagline).paintFlags = findViewById<TextView>(R.id.details_movie_tagline).paintFlags or Paint.UNDERLINE_TEXT_FLAG
+        }else{
+            findViewById<TextView>(R.id.details_movie_tagline).visibility = View.GONE
+        }
         findViewById<TextView>(R.id.details_movie_overview).text = movie.overview
         try{
             val year = movie.releaseDate!!.substring(0, 4)
@@ -120,6 +130,8 @@ class MovieDetailActivity() : AppCompatActivity() {
             findViewById<TextView>(R.id.details_movie_platforms_text).visibility = View.GONE
         }
         inflateRecommandationsRecycler(recommandations)
+
+        InflateTrailerRecycler(movie.videos?.results!!)
     }
 
     private fun inflateWatchProvidersRecycler(flatrates : List<Flatrate>){
@@ -143,6 +155,19 @@ class MovieDetailActivity() : AppCompatActivity() {
         recyclerView.adapter = recommandationsAdapter
     }
 
+    private fun InflateTrailerRecycler(trailers : List<VideoResults>){
+        val trailersAdapter = TrailersAdapter(trailers, ::navigateToTrailer)
+        val recyclerView = findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.details_movie_trailers_recyclerview)
+        recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        recyclerView.adapter = trailersAdapter
+    }
+
+    private fun navigateToTrailer(url: String) {
+        val intent = Intent(android.content.Intent.ACTION_VIEW, Uri.parse(url))
+        intent.putExtra("url", url)
+        startActivity(intent)
+    }
+
     public fun addToWatchList(movie : MediaMovie){
         //TODO
         Toast.makeText(this, "Added to watchlist", Toast.LENGTH_SHORT).show()
@@ -156,10 +181,11 @@ class MovieDetailActivity() : AppCompatActivity() {
     }
 
     private fun fetchMovieDetails(idMovie: Int): MediaMovie {
-        return ApiCall().getMovieAndWatchProvidersAndCreditsById(idMovie)
+        return ApiCall().getMovieAndWatchProvidersAndCreditsAndVideosById(idMovie)
     }
 
     override fun onBackPressed() {
         //todo implement navigation, go back to previous activity
+        finish()
     }
 }

@@ -30,4 +30,5 @@
     <string name="forum_posts_related_to_movie">Posts du forum liés au film</string>
     <string name="cast_item_playing_as">Dans le rôle de :</string>
     <string name="recommandations_label">Recommandations :</string>
+    <string name="trailers_label">Bandes-annonce disponibles:</string>
 </resources>

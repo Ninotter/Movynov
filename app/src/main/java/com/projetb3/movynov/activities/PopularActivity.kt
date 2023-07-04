@@ -71,6 +71,7 @@ class PopularActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
     public fun navigateToMovieDetails(id : Int){
         //TODO
+        //Intent with FLAG_ACTIVITY_REORDER_TO_FRONT
         val intent = Intent(this, MovieDetailActivity::class.java)
         intent.putExtra("id", id)
         startActivity(intent)
