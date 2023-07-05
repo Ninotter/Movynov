@@ -7,7 +7,7 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.io.IOException
 
-class ApiCall {
+class tmdbDirectApiCall {
     private val baseUrl: String = "https://api.themoviedb.org/3/"
     private val apiKey = "api_key=fdfce6336a8fb018fbf3a502ae698cac"
     private val client = OkHttpClient()

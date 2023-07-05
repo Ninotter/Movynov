@@ -15,23 +15,19 @@
         <item
             android:id="@+id/nav_forum"
             android:title="@string/navbar_forum"/>
-        <item
-            android:id="@+id/nav_settings"
-            android:title="@string/navbar_settings"/>
     </group>
-    <item
-        android:title=""
+
+    <group
+        android:title="ddd"
         >
-        <menu>
             <item
                 android:id="@+id/nav_login"
                 android:title="@string/navbar_login"/>
             <item
                 android:id="@+id/nav_username"
-                android:title="TODO_USERNAME"/>
+                android:title="USERNAME_PLACEHOLDER"/>
             <item
                 android:id="@+id/nav_logout"
                 android:title="@string/navbar_logout"/>
-        </menu>
-    </item>
+    </group>
 </menu>

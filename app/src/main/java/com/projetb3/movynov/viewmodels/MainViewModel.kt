@@ -1,38 +1,45 @@
 package com.projetb3.movynov.viewmodels
 
-import android.content.Intent
 import androidx.lifecycle.ViewModel
-import com.projetb3.movynov.dataclasses.MediaMovie
-import com.projetb3.movynov.dataclasses.User
+import com.google.gson.Gson
+import com.projetb3.movynov.dataclasses.auth.LoginRegisterResult
+import com.projetb3.movynov.dataclasses.auth.User
+import com.projetb3.movynov.model.AuthModel
 
 class MainViewModel : ViewModel(){
-    private lateinit var popularMovies : List<MediaMovie>
     private var connectedUser : User? = null
-    private var mainViewType : MainViewType = MainViewType.POPULAR
 
-    //solution enviseagable? TODO
-    enum class MainViewType {
-        POPULAR,
-        WATCHLIST,
-        SEARCH,
-        PROFILE
+
+    fun login(email : String, password : String) : Boolean{
+        val response = AuthModel().login(email, password)
+        if (response.isSuccessful){
+            val loginResult = Gson().fromJson(response.body!!.string(), LoginRegisterResult::class.java)
+            val user = User(email, loginResult.token!!)
+            setConnectedUser(user)
+            return true
+        }else{
+            return false
+        }
     }
-    public fun changeNavigation(intent:Intent){
-        //TODO
-        /*if(intent = pageWatchlist){
-            mainViewType = MainViewType.WATCHLIST
-        }*/ //etc
+
+    fun register(email: String, password: String): Boolean {
+        val response = AuthModel().register(email, password)
+        if (response.isSuccessful){
+            Gson().fromJson(response.body!!.string(), LoginRegisterResult::class.java)
+            val user = User(email, response.body!!.string())
+            setConnectedUser(user)
+            return true
+        }else{
+            return false
+        }
+    }
+
+    fun setConnectedUser(user : User){
+        connectedUser = user
     }
 
     fun getConnectedUser() : User? {
         return connectedUser
     }
 
-    fun getMainViewType() : MainViewType {
-        return mainViewType
-    }
-
-    fun getPopularMovies() : List<MediaMovie> {
-        return popularMovies
-    }
 }

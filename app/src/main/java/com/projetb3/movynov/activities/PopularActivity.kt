@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -12,12 +13,17 @@ import com.google.android.material.navigation.NavigationView
 import com.projetb3.movynov.R
 import com.projetb3.movynov.activities.adapters.PopularAdapter
 import com.projetb3.movynov.dataclasses.MediaMovie
-import com.projetb3.movynov.repository.ApiCall
+import com.projetb3.movynov.model.MediaMovieModel
+import com.projetb3.movynov.repository.MovynovApiCall
+import com.projetb3.movynov.repository.tmdbDirectApiCall
+import com.projetb3.movynov.viewmodels.MainViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class PopularActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var drawerLayout : DrawerLayout
+    private val viewModel: MainViewModel by viewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,12 +62,14 @@ class PopularActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     }
 
     private fun fetchPopularMovies() : List<MediaMovie> {
-        // Use coroutines to perform the API request asynchronously
-        return ApiCall().getPopularMovies()
+        return MediaMovieModel().getPopularMovies()
+        //return tmdbDirectApiCall().getPopularMovies()
     }
 
+
+
     public override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        TODO("Not yet implemented")
+        return MenuBehavior().onNavigationItemSelected(item, this)
     }
 
     public fun addToWatchList(movie : MediaMovie){
@@ -70,8 +78,6 @@ class PopularActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     }
 
     public fun navigateToMovieDetails(id : Int){
-        //TODO
-        //Intent with FLAG_ACTIVITY_REORDER_TO_FRONT
         val intent = Intent(this, MovieDetailActivity::class.java)
         intent.putExtra("id", id)
         startActivity(intent)

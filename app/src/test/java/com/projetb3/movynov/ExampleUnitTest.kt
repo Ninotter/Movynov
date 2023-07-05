@@ -1,8 +1,9 @@
 package com.projetb3.movynov
 
 import com.projetb3.movynov.dataclasses.MediaMovie
-import com.projetb3.movynov.repository.ApiCall
-import org.junit.Assert
+import com.projetb3.movynov.model.AuthModel
+import com.projetb3.movynov.repository.tmdbDirectApiCall
+import okhttp3.Response
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -20,19 +21,25 @@ class ExampleUnitTest {
 
     @Test
     fun MovieList_isNotEmpty(){
-        val movies : List<MediaMovie> = ApiCall().getPopularMovies()
+        val movies : List<MediaMovie> = tmdbDirectApiCall().getPopularMovies()
         assertTrue(movies.isNotEmpty())
     }
 
     @Test
     fun Movie_isNotEmpty(){
-        val movie : MediaMovie = ApiCall().getMovieAndWatchProvidersAndCreditsAndVideosById(315162)
+        val movie : MediaMovie = tmdbDirectApiCall().getMovieAndWatchProvidersAndCreditsAndVideosById(315162)
         assertTrue(movie.title != null)
     }
 
     @Test
     fun Recommanded_isNotEmpty(){
-        val movies : List<MediaMovie> = ApiCall().getRelatedMoviesById(76600)
+        val movies : List<MediaMovie> = tmdbDirectApiCall().getRelatedMoviesById(76600)
         assertTrue(movies.isNotEmpty())
+    }
+
+    @Test
+    fun Login_isCorrect(){
+        val response : Response = AuthModel().login("test2@gmail.com", "password")
+        assertTrue(response.isSuccessful)
     }
 }

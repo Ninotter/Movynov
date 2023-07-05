@@ -1,17 +1,16 @@
 package com.projetb3.movynov.activities
 
-import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Paint
 import android.net.Uri
 import android.os.Bundle
-import android.provider.LiveFolders.INTENT
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
@@ -24,10 +23,11 @@ import com.projetb3.movynov.activities.adapters.TrailersAdapter
 import com.projetb3.movynov.activities.adapters.WatchProvidersAdapter
 import com.projetb3.movynov.dataclasses.MediaMovie
 import com.projetb3.movynov.dataclasses.credits.Cast
-import com.projetb3.movynov.dataclasses.credits.Credits
 import com.projetb3.movynov.dataclasses.videos.VideoResults
 import com.projetb3.movynov.dataclasses.watchproviders.Flatrate
-import com.projetb3.movynov.repository.ApiCall
+import com.projetb3.movynov.model.MediaMovieModel
+import com.projetb3.movynov.repository.tmdbDirectApiCall
+import com.projetb3.movynov.viewmodels.MainViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -36,6 +36,8 @@ class MovieDetailActivity() : AppCompatActivity() {
     private lateinit var movie: MediaMovie
     private lateinit var recommandations : List<MediaMovie>
     private lateinit var lastActivity : AppCompatActivity
+    private val viewModel: MainViewModel by viewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,7 +76,7 @@ class MovieDetailActivity() : AppCompatActivity() {
     }
 
     private fun fetchRecommendations(idMovie: Int): List<MediaMovie> {
-        return ApiCall().getRelatedMoviesById(idMovie)
+        return tmdbDirectApiCall().getRelatedMoviesById(idMovie)
     }
 
 
@@ -181,7 +183,7 @@ class MovieDetailActivity() : AppCompatActivity() {
     }
 
     private fun fetchMovieDetails(idMovie: Int): MediaMovie {
-        return ApiCall().getMovieAndWatchProvidersAndCreditsAndVideosById(idMovie)
+        return MediaMovieModel().getMovieById(idMovie)
     }
 
     override fun onBackPressed() {
