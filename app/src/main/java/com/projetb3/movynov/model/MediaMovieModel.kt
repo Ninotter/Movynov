@@ -27,7 +27,7 @@ class MediaMovieModel {
     }
 
     public fun getRelatedMovies(id: Int) : List<MediaMovie> {
-        val urlRequest = tmdbApi + "recommandation/$id"
+        val urlRequest = tmdbApi + "/recommandation/$id"
 
         val response = MovynovApiCall().executeGet(urlRequest);
         val mediaMovieList = Gson().fromJson(response, MediaMovieList::class.java)

@@ -26,27 +26,45 @@ class LoginActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.login_button).setOnClickListener {
             if (verifyFields()){
-                GlobalScope.launch {
-                    if (viewModel.login(emailField.text.toString(), passwordField.text.toString())){
-                        runOnUiThread(Runnable {
-                            afterAuth()
-                        })
-                    } else {
-                        runOnUiThread(Runnable {
-                            val errorTextView = findViewById<TextView>(R.id.login_error_text)
-                            errorTextView.visibility = TextView.VISIBLE
-                            errorTextView.text = "Erreur lors de la connexion."
-                        })
-                    }
-                }
-
+                tryLogin()
             }
         }
 
         findViewById<Button>(R.id.register_button).setOnClickListener {
             if (verifyFields()){
-                GlobalScope.launch {
-                if (viewModel.register(emailField.text.toString(), passwordField.text.toString())){
+                tryRegister()
+            }
+        }
+    }
+
+    private fun tryLogin(){
+        try{
+            GlobalScope.launch {
+                if (viewModel.login(emailField.text.toString(), passwordField.text.toString())){
+                    runOnUiThread(Runnable {
+                        afterAuth()
+                    })
+                } else {
+                    runOnUiThread(Runnable {
+                        val errorTextView = findViewById<TextView>(R.id.login_error_text)
+                        errorTextView.visibility = TextView.VISIBLE
+                        errorTextView.text = "Erreur lors de la connexion."
+                    })
+                }
+            }
+        }catch(ex : Exception){
+            runOnUiThread(Runnable {
+                val errorTextView = findViewById<TextView>(R.id.login_error_text)
+                errorTextView.visibility = TextView.VISIBLE
+                errorTextView.text = "Erreur lors de la connexion."
+            })
+        }
+    }
+
+    private fun tryRegister(){
+        GlobalScope.launch {
+            try{
+                if(viewModel.register(emailField.text.toString(), passwordField.text.toString())){
                     afterAuth()
                 } else {
                     runOnUiThread(Runnable {
@@ -54,7 +72,13 @@ class LoginActivity : AppCompatActivity() {
                         errorTextView.visibility = TextView.VISIBLE
                         errorTextView.text = "Erreur lors de l'inscription."
                     })
-                }}
+                }
+            }catch(ex : Exception){
+                runOnUiThread(Runnable {
+                    val errorTextView = findViewById<TextView>(R.id.login_error_text)
+                    errorTextView.visibility = TextView.VISIBLE
+                    errorTextView.text = "Erreur lors de l'inscription."
+                })
             }
         }
     }

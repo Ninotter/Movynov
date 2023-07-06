@@ -26,6 +26,7 @@ import com.projetb3.movynov.dataclasses.credits.Cast
 import com.projetb3.movynov.dataclasses.videos.VideoResults
 import com.projetb3.movynov.dataclasses.watchproviders.Flatrate
 import com.projetb3.movynov.model.MediaMovieModel
+import com.projetb3.movynov.repository.MovynovApiCall
 import com.projetb3.movynov.repository.tmdbDirectApiCall
 import com.projetb3.movynov.viewmodels.MainViewModel
 import kotlinx.coroutines.GlobalScope
@@ -76,7 +77,7 @@ class MovieDetailActivity() : AppCompatActivity() {
     }
 
     private fun fetchRecommendations(idMovie: Int): List<MediaMovie> {
-        return tmdbDirectApiCall().getRelatedMoviesById(idMovie)
+        return MediaMovieModel().getRelatedMovies(idMovie)
     }
 
 
