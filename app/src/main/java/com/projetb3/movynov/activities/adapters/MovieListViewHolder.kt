@@ -15,15 +15,6 @@ class MovieListViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
     val movieReleaseDateTextView : TextView = itemView.findViewById(R.id.movie_release_date)
     val movieRatingTextView : TextView = itemView.findViewById(R.id.movie_vote_average)
     val addToWatchListButton : ImageView = itemView.findViewById(R.id.movie_add_watchlist)
+    val removeFromWatchListButton: ImageView = itemView.findViewById(R.id.movie_remove_watchlist)
 
-    //A UTILISER POUR SUPPRIMER UN ELEMENT DE LA LISTE
-    //fun onClick(v: View) {
-    //    //Log.d("View: ", v.toString());
-    //    //Toast.makeText(v.getContext(), mTextViewTitle.getText() + " position = " + getPosition(), Toast.LENGTH_SHORT).show();
-    //    if (v == imgViewRemoveIcon) {
-    //        removeAt(getPosition())
-    //    } else if (mItemClickListener != null) {
-    //       mItemClickListener.onItemClick(v, getPosition())
-    //    }
-    //}
 }

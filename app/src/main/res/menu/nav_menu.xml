@@ -14,8 +14,8 @@
             android:id="@+id/nav_watchlist"
             android:title="@string/navbar_watchlist"/>
         <item
-            android:id="@+id/nav_forum"
-            android:title="@string/navbar_forum"/>
+            android:id="@+id/nav_search"
+            android:title="@string/navbar_search"/>
     </group>
 
     <group

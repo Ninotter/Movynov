@@ -15,7 +15,6 @@ class MenuBehavior {
         navigationView.menu.findItem(R.id.nav_login).isVisible = false
         navigationView.menu.findItem(R.id.nav_logout).isVisible = true
         navigationView.menu.findItem(R.id.nav_watchlist).isVisible = true
-        navigationView.menu.findItem(R.id.nav_forum).isVisible = true
         navigationView.menu.findItem(R.id.nav_username).isVisible = true
         //todo change to username
         navigationView.menu.findItem(R.id.nav_username).title = connectedUser.email

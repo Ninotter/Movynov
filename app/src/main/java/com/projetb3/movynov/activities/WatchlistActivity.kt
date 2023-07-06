@@ -11,6 +11,7 @@ import com.google.android.material.navigation.NavigationView
 import com.projetb3.movynov.R
 import com.projetb3.movynov.activities.adapters.MovieListAdapter
 import com.projetb3.movynov.dataclasses.MediaMovie
+import com.projetb3.movynov.dataclasses.auth.User
 import com.projetb3.movynov.model.MediaMovieModel
 import com.projetb3.movynov.model.WatchlistModel
 import com.projetb3.movynov.viewmodels.MainViewModel
@@ -49,22 +50,29 @@ class WatchlistActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 listMovies = listMovies + movie
             }
             runOnUiThread(Runnable {
-                inflateRecycler(listMovies)
+                inflateRecycler(listMovies, viewModel.getConnectedUser())
             })
         }
     }
 
-    public fun inflateRecycler(movieList : List<MediaMovie>){
-        val mediaMovieResultsAdapter = MovieListAdapter(movieList, ::navigateToMovieDetails, ::addToWatchList)
+    public fun inflateRecycler(movieList : List<MediaMovie>, user : User? = null){
+        val mediaMovieResultsAdapter = MovieListAdapter(movieList.toMutableList(), user, ::navigateToMovieDetails, ::addToWatchList, ::removeFromWatchList)
         val recyclerView = findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.watchlist_recycler)
         recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
         recyclerView.adapter = mediaMovieResultsAdapter
     }
 
+    private fun removeFromWatchList(movie: MediaMovie): Boolean {
+        TODO("Not yet implemented")
+        Toast.makeText(this, "Retiré de votre watchlist", Toast.LENGTH_LONG).show()
+        return true
+    }
 
 
-    private fun addToWatchList(movie: MediaMovie) {
+    private fun addToWatchList(movie: MediaMovie) : Boolean {
         //todo /remove from watchlist
+        Toast.makeText(this, "Ajouté à votre watchlist", Toast.LENGTH_LONG).show()
+        return true
     }
 
     private fun navigateToMovieDetails(id: Int) {

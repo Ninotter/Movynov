@@ -77,4 +77,10 @@ class ExampleUnitTest {
         val comments = ForumModel().getAllCommentsByUserToken(token)
         assertTrue(comments.isNotEmpty())
     }
+
+    @Test
+    fun MediaMovieSearch_isNotEmpty(){
+        val movies = MediaMovieModel().getMoviesByTitle("club")
+        assertTrue(movies.isNotEmpty())
+    }
 }

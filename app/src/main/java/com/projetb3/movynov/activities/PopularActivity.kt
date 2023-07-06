@@ -14,6 +14,7 @@ import com.projetb3.movynov.activities.adapters.MovieListAdapter
 import com.projetb3.movynov.dataclasses.MediaMovie
 import com.projetb3.movynov.dataclasses.auth.User
 import com.projetb3.movynov.model.MediaMovieModel
+import com.projetb3.movynov.model.WatchlistModel
 import com.projetb3.movynov.viewmodels.MainViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -44,34 +45,56 @@ class PopularActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             val movies = fetchPopularMovies()
             for (mediaMovie in movies) {
                 mediaMovie.updatePosterImage()
+                if (viewModel.getConnectedUser() != null){
+                    mediaMovie.checkIfIsInWatchList(viewModel.getConnectedUser()?.token)
+                }
             }
             runOnUiThread(Runnable {
-                inflateRecycler(movies)
+                inflateRecycler(movies, viewModel.getConnectedUser())
             })
         }
     }
 
 
-    private fun inflateRecycler(movies : List<MediaMovie>){
-        val mediaMovieResultsAdapter = MovieListAdapter(movies, ::navigateToMovieDetails, ::addToWatchList)
+    private fun inflateRecycler(movies : List<MediaMovie>, user: User? = null){
+        val mediaMovieResultsAdapter = MovieListAdapter(movies.toMutableList(), user, ::navigateToMovieDetails, ::addToWatchList, ::removeFromWatchList)
         val recyclerView = findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.popular_recycler)
         recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
         recyclerView.adapter = mediaMovieResultsAdapter
     }
 
+
     private fun fetchPopularMovies() : List<MediaMovie> {
         return MediaMovieModel().getPopularMovies()
     }
-
-
 
     public override fun onNavigationItemSelected(item: MenuItem): Boolean {
         return MenuBehavior().onNavigationItemSelected(item, this)
     }
 
-    public fun addToWatchList(movie : MediaMovie){
-        //TODO
-        Toast.makeText(this, "Added to watchlist", Toast.LENGTH_SHORT).show()
+    public fun addToWatchList(movie : MediaMovie): Boolean{
+        if(WatchlistModel().addToWatchList(viewModel.getConnectedUser()?.token!!, movie.id!!)){
+            runOnUiThread(Runnable {
+                Toast.makeText(this, "Added to watchlist", Toast.LENGTH_SHORT).show()
+            })
+            return true;
+        }
+        runOnUiThread(Runnable {
+            Toast.makeText(this, "Error while adding to watchlist", Toast.LENGTH_SHORT).show()
+        })
+        return false;
+    }
+
+    private fun removeFromWatchList(movie: MediaMovie): Boolean {
+        if (WatchlistModel().removeFromWatchlist(viewModel.getConnectedUser()?.token!!, movie.id!!))
+            {
+                runOnUiThread(Runnable {
+                    Toast.makeText(this, "Removed from watchlist", Toast.LENGTH_SHORT).show()
+                })
+                return true
+            }
+        runOnUiThread(Runnable {Toast.makeText(this, "Error while removing from watchlist", Toast.LENGTH_SHORT).show()})
+        return true
     }
 
     public fun navigateToMovieDetails(id : Int){

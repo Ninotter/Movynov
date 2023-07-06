@@ -9,6 +9,7 @@ import com.google.gson.annotations.SerializedName
 import com.projetb3.movynov.dataclasses.credits.Credits
 import com.projetb3.movynov.dataclasses.videos.Videos
 import com.projetb3.movynov.dataclasses.watchproviders.WatchProviders
+import com.projetb3.movynov.model.WatchlistModel
 import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.URL
@@ -45,6 +46,30 @@ class MediaMovie(
 ){
     var posterImage : Drawable? = null
     var backdropImage : Drawable? = null
+    var isInWatchList : IsInWatchList = MediaMovie.IsInWatchList.USER_NOT_LOGGED_IN
+
+    public fun getIsInWatchList() : IsInWatchList{
+        return isInWatchList
+    }
+
+    enum class IsInWatchList {
+        TRUE,
+        FALSE,
+        USER_NOT_LOGGED_IN
+    }
+
+    fun checkIfIsInWatchList(token: String?){
+        val watchlistModel = WatchlistModel()
+        isInWatchList = if(token != null && token != ""){
+            if(watchlistModel.isInWatchList(token, id!!)){
+                IsInWatchList.TRUE
+            }else{
+                IsInWatchList.FALSE
+            }
+        }else{
+            IsInWatchList.USER_NOT_LOGGED_IN
+        }
+    }
 
     fun updatePosterImage(){
         if(posterPath != null){

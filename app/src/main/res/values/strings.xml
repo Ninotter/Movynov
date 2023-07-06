@@ -31,4 +31,5 @@
     <string name="cast_item_playing_as">Dans le rôle de :</string>
     <string name="recommandations_label">Recommandations :</string>
     <string name="trailers_label">Bandes-annonce disponibles:</string>
+    <string name="navbar_search">Search</string>
 </resources>

@@ -22,6 +22,7 @@ import com.projetb3.movynov.activities.adapters.MovieListAdapter
 import com.projetb3.movynov.activities.adapters.TrailersAdapter
 import com.projetb3.movynov.activities.adapters.WatchProvidersAdapter
 import com.projetb3.movynov.dataclasses.MediaMovie
+import com.projetb3.movynov.dataclasses.auth.User
 import com.projetb3.movynov.dataclasses.credits.Cast
 import com.projetb3.movynov.dataclasses.videos.VideoResults
 import com.projetb3.movynov.dataclasses.watchproviders.Flatrate
@@ -52,6 +53,7 @@ class MovieDetailActivity() : AppCompatActivity() {
             movie.updateBackDropImageFullResolution()
             for (mediaMovie in recommandations) {
                 mediaMovie.updatePosterImage()
+                mediaMovie.checkIfIsInWatchList(viewModel.getConnectedUser()?.token)
             }
             //setting up watch providers for recyclerview
             for(flatrate: Flatrate in movie.watchProviders?.results?.FR?.flatrate!!){
@@ -130,7 +132,7 @@ class MovieDetailActivity() : AppCompatActivity() {
             findViewById<RecyclerView>(R.id.details_movie_platforms_recyclerview).visibility = View.GONE
             findViewById<TextView>(R.id.details_movie_platforms_text).visibility = View.GONE
         }
-        inflateRecommandationsRecycler(recommandations)
+        inflateRecommandationsRecycler(recommandations, viewModel.getConnectedUser())
 
         InflateTrailerRecycler(movie.videos?.results!!)
     }
@@ -149,11 +151,17 @@ class MovieDetailActivity() : AppCompatActivity() {
         recyclerView.adapter = creditsAdapter
     }
 
-    private fun inflateRecommandationsRecycler(movies : List<MediaMovie>){
-        val recommandationsAdapter = MovieListAdapter(movies, ::navigateToMovieDetails, ::addToWatchList)
+    private fun inflateRecommandationsRecycler(movies : List<MediaMovie>, user : User? = null){
+        val recommandationsAdapter = MovieListAdapter(movies.toMutableList(), user, ::navigateToMovieDetails, ::addToWatchList, ::removeFromWatchlist)
         val recyclerView = findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.details_movie_recommandations_recyclerview)
         recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerView.adapter = recommandationsAdapter
+    }
+
+    private fun removeFromWatchlist(movie: MediaMovie): Boolean {
+        //todo
+        Toast.makeText(this, "Removed from watchlist", Toast.LENGTH_SHORT).show()
+        return true
     }
 
     private fun InflateTrailerRecycler(trailers : List<VideoResults>){
@@ -169,9 +177,10 @@ class MovieDetailActivity() : AppCompatActivity() {
         startActivity(intent)
     }
 
-    public fun addToWatchList(movie : MediaMovie){
+    public fun addToWatchList(movie : MediaMovie) : Boolean{
         //TODO
         Toast.makeText(this, "Added to watchlist", Toast.LENGTH_SHORT).show()
+        return true
     }
 
     public fun navigateToMovieDetails(id : Int){

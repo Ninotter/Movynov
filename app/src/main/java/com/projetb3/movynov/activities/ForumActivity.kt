@@ -12,5 +12,8 @@ class ForumActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_forum)
+
+        val idMovie = intent.getIntExtra("idMovie", -1)
+        val idUser = intent.getIntExtra("idUser", -1)
     }
 }

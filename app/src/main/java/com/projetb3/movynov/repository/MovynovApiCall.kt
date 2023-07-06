@@ -18,6 +18,7 @@ class MovynovApiCall {
     private val physicalAndroidUrl: String = "http://192.168.99.76:8000"
     //prod url
     //todo : change this url to the prod url
+    private val ProdUrl = ""
     private val client = OkHttpClient()
     //Change accordingly to dev or prod
     private val currentUrl = physicalAndroidUrl
@@ -49,6 +50,41 @@ class MovynovApiCall {
         val request: Request = Request.Builder()
             .url(currentUrl + url)
             .post(body)
+            .build()
+
+        val call: Call = client.newCall(request)
+        val response: Response = call.execute()
+        return response
+    }
+
+    public fun executePostWithAuthorization(url : String, body : RequestBody, token: String) : Response{
+        val request: Request = Request.Builder()
+            .url(currentUrl + url)
+            .addHeader("Authorization", "Bearer $token")
+            .post(body)
+            .build()
+
+        val call: Call = client.newCall(request)
+        val response: Response = call.execute()
+        return response
+    }
+
+    public fun executeDeleteWithAuthorization(url : String, body : RequestBody, token: String) : Response{
+        val request: Request = Request.Builder()
+            .url(currentUrl + url)
+            .addHeader("Authorization", "Bearer $token")
+            .delete(body)
+            .build()
+
+        val call: Call = client.newCall(request)
+        val response: Response = call.execute()
+        return response
+    }
+
+    public fun executeBodylessDeleteWithAuthorization(url : String, token: String) : Response{
+        val request: Request = Request.Builder()
+            .url(currentUrl + url)
+            .addHeader("Authorization", "Bearer $token")
             .build()
 
         val call: Call = client.newCall(request)

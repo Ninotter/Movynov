@@ -33,4 +33,12 @@ class MediaMovieModel {
         val mediaMovieList = Gson().fromJson(response, MediaMovieList::class.java)
         return mediaMovieList.results
     }
+
+    public fun getMoviesByTitle(search : String) : List<MediaMovie>{
+        val urlRequest = tmdbApi + "/searchName/$search"
+
+        val response =  MovynovApiCall().executeGet(urlRequest);
+        val mediaMovieList = Gson().fromJson(response, MediaMovieList::class.java)
+        return mediaMovieList.results
+    }
 }
