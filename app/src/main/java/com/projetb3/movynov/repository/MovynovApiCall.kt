@@ -18,11 +18,23 @@ class MovynovApiCall {
     //todo : change this url to the prod url
     private val client = OkHttpClient()
     //Change accordingly to dev or prod
-    private val currentUrl = devVirtualMachineBaseUrl
+    private val currentUrl = devBaseUrl
 
     public fun executeGet(optionalUrl : String) : String{
         val request = Request.Builder()
             .url(currentUrl + optionalUrl)
+            .build()
+
+        client.newCall(request).execute().use { response ->
+            if (!response.isSuccessful) throw IOException("Unexpected code $response")
+            else return response.body!!.string()
+        }
+    }
+
+    public fun executeGetWithAuthorization(optionalUrl : String, token: String) : String{
+        val request = Request.Builder()
+            .url(currentUrl + optionalUrl)
+            .addHeader("Authorization", "Bearer $token")
             .build()
 
         client.newCall(request).execute().use { response ->
