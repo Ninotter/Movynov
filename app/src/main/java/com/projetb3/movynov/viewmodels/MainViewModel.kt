@@ -5,9 +5,14 @@ import com.google.gson.Gson
 import com.projetb3.movynov.dataclasses.auth.LoginRegisterResult
 import com.projetb3.movynov.dataclasses.auth.User
 import com.projetb3.movynov.model.AuthModel
+import com.projetb3.movynov.singleton.SingletonCurrentUser
 
 class MainViewModel : ViewModel(){
-    private var connectedUser : User? = null
+    private val connectedUser : SingletonCurrentUser
+
+    init{
+        connectedUser = SingletonCurrentUser.getInstance()
+    }
 
 
     fun login(email : String, password : String) : Boolean{
@@ -35,11 +40,11 @@ class MainViewModel : ViewModel(){
     }
 
     fun setConnectedUser(user : User){
-        connectedUser = user
+        connectedUser.setUser(user)
     }
 
     fun getConnectedUser() : User? {
-        return connectedUser
+        return connectedUser!!.getUser()
     }
 
 }

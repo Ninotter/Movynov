@@ -27,6 +27,14 @@
                     android:layout_height="wrap_content"
                     android:text="Popular"
                     android:textSize="30dp" />
+
+                <ImageView
+                    android:id="@+id/popular_search_button"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_marginRight="10dp"
+                    />
             </androidx.appcompat.widget.Toolbar>
 
             <RelativeLayout
