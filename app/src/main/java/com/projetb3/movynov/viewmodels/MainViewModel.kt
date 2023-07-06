@@ -19,7 +19,7 @@ class MainViewModel : ViewModel(){
         val response = AuthModel().login(email, password)
         if (response.isSuccessful){
             val loginResult = Gson().fromJson(response.body!!.string(), LoginRegisterResult::class.java)
-            val user = User(email, loginResult.token!!)
+            val user = User(email, "TODO" ,loginResult.token!!) //TODO
             setConnectedUser(user)
             return true
         }else{

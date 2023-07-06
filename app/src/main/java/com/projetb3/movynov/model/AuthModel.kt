@@ -1,5 +1,7 @@
 package com.projetb3.movynov.model
 
+import com.google.gson.Gson
+import com.projetb3.movynov.dataclasses.auth.LoginRegisterResult
 import com.projetb3.movynov.repository.MovynovApiCall
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.FormBody
@@ -29,5 +31,10 @@ class AuthModel {
         val body = json.toString().toRequestBody(mediaType)
 
         return MovynovApiCall().executePost("/api/login", body)
+    }
+
+    public fun extractTokenFromResponse(response: Response) : String{
+        val loginRegisterResult = Gson().fromJson(response.body?.string(), LoginRegisterResult::class.java)
+        return loginRegisterResult.token!!
     }
 }

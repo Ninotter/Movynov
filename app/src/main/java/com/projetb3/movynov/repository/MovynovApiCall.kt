@@ -14,11 +14,13 @@ class MovynovApiCall {
     private val devVirtualMachineBaseUrl: String = "http://10.0.2.2:8000"
     //unit test url
     private val devBaseUrl: String = "http://127.0.0.1:8000"
+
+    private val physicalAndroidUrl: String = "http://192.168.99.76:8000"
     //prod url
     //todo : change this url to the prod url
     private val client = OkHttpClient()
     //Change accordingly to dev or prod
-    private val currentUrl = devBaseUrl
+    private val currentUrl = physicalAndroidUrl
 
     public fun executeGet(optionalUrl : String) : String{
         val request = Request.Builder()

@@ -3,6 +3,7 @@ package com.projetb3.movynov
 import com.projetb3.movynov.dataclasses.MediaMovie
 import com.projetb3.movynov.dataclasses.watchlist.WatchlistResult
 import com.projetb3.movynov.model.AuthModel
+import com.projetb3.movynov.model.ForumModel
 import com.projetb3.movynov.model.MediaMovieModel
 import com.projetb3.movynov.model.WatchlistModel
 import com.projetb3.movynov.repository.tmdbDirectApiCall
@@ -56,5 +57,24 @@ class ExampleUnitTest {
     fun watchlist_isNotEmpty(){
         val results :List<WatchlistResult> = WatchlistModel().getWatchlistByToken("eyJpYXQiOjE2ODg2Mzc0MjAsImV4cCI6MTY4ODYzODMyMCwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInBzZXVkbyI6IlRlc3RldXIiLCJlbWFpbCI6InRlc3QyQGdtYWlsLmNvbSJ9")
         assertTrue(results.isNotEmpty())
+    }
+
+    @Test
+    fun PostsAboutFilm_isNotEmpty(){
+        val posts = ForumModel().getAllForumPostsByMovieId(122)
+        assertTrue(posts.isNotEmpty())
+    }
+
+    @Test
+    fun CommentsBelowPost_isNotEmpty(){
+        val comments = ForumModel().getAllCommentsByPostId(1)
+        assertTrue(comments.isNotEmpty())
+    }
+
+    @Test
+    fun CommentsByUser_isNotEmpty(){
+        val token = "eyJpYXQiOjE2ODg2NDU4ODYsImV4cCI6MTY4ODY0Njc4Niwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJwc2V1ZG8iOiJUZXN0ZXVyIiwiZW1haWwiOiJ0ZXN0MkBnbWFpbC5jb20ifQ=="
+        val comments = ForumModel().getAllCommentsByUserToken(token)
+        assertTrue(comments.isNotEmpty())
     }
 }

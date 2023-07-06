@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.projetb3.movynov.R
 import com.projetb3.movynov.activities.adapters.CreditsAdapter
-import com.projetb3.movynov.activities.adapters.PopularAdapter
+import com.projetb3.movynov.activities.adapters.MovieListAdapter
 import com.projetb3.movynov.activities.adapters.TrailersAdapter
 import com.projetb3.movynov.activities.adapters.WatchProvidersAdapter
 import com.projetb3.movynov.dataclasses.MediaMovie
@@ -26,8 +26,6 @@ import com.projetb3.movynov.dataclasses.credits.Cast
 import com.projetb3.movynov.dataclasses.videos.VideoResults
 import com.projetb3.movynov.dataclasses.watchproviders.Flatrate
 import com.projetb3.movynov.model.MediaMovieModel
-import com.projetb3.movynov.repository.MovynovApiCall
-import com.projetb3.movynov.repository.tmdbDirectApiCall
 import com.projetb3.movynov.viewmodels.MainViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -152,7 +150,7 @@ class MovieDetailActivity() : AppCompatActivity() {
     }
 
     private fun inflateRecommandationsRecycler(movies : List<MediaMovie>){
-        val recommandationsAdapter = PopularAdapter(movies, ::navigateToMovieDetails, ::addToWatchList)
+        val recommandationsAdapter = MovieListAdapter(movies, ::navigateToMovieDetails, ::addToWatchList)
         val recyclerView = findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.details_movie_recommandations_recyclerview)
         recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerView.adapter = recommandationsAdapter
