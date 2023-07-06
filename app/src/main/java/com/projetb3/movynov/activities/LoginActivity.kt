@@ -3,17 +3,22 @@ package com.projetb3.movynov.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.appcompat.widget.Toolbar
+import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.navigation.NavigationView
 import com.projetb3.movynov.R
 import com.projetb3.movynov.viewmodels.MainViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private val viewModel: MainViewModel by viewModels()
+    private lateinit var drawerLayout : DrawerLayout
 
     private lateinit var emailField : EditText
     private lateinit var passwordField : EditText
@@ -21,6 +26,12 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+
+        drawerLayout = findViewById(R.id.login_drawer_layout)
+        val navigationView = findViewById<NavigationView>(R.id.login_nav_view)
+        DrawerBehavior().setDrawerOpenOnClick(drawerLayout, navigationView, this, findViewById(R.id.login_toolbar))
+
         emailField = findViewById(R.id.login_email)
         passwordField = findViewById(R.id.login_password)
 
@@ -106,5 +117,9 @@ class LoginActivity : AppCompatActivity() {
         //clears activity stack
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         startActivity(intent)
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        return MenuBehavior().onNavigationItemSelected(item, this)
     }
 }

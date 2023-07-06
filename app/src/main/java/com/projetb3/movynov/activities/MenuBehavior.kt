@@ -14,6 +14,11 @@ class MenuBehavior {
                 activity.startActivity(intent)
                 return true
             }
+            R.id.nav_popular -> {
+                val intent = Intent(activity, PopularActivity::class.java)
+                activity.startActivity(intent)
+                return true
+            }
         }
         return false
     }

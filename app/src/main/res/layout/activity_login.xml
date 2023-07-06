@@ -105,4 +105,16 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/login_nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:itemIconTint="@color/lavender"
+        app:itemTextColor="@color/lavender"
+        app:menu="@menu/nav_menu"
+        tools:visibility="gone"/>
+
 </androidx.drawerlayout.widget.DrawerLayout>

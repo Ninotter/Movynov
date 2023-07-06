@@ -50,5 +50,6 @@
             android:layout_gravity="start"
             app:itemIconTint="@color/lavender"
             app:itemTextColor="@color/lavender"
-            app:menu="@menu/nav_menu" />
+            app:menu="@menu/nav_menu"
+            tools:visibility="gone"/>
     </androidx.drawerlayout.widget.DrawerLayout>

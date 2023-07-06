@@ -36,12 +36,7 @@ class PopularActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
          */
         drawerLayout = findViewById(R.id.popular_drawer_layout)
         val navigationView = findViewById<NavigationView>(R.id.popular_nav_view)
-        navigationView.setNavigationItemSelectedListener(this)
-
-        val toggle = ActionBarDrawerToggle(this, drawerLayout, findViewById(R.id.popular_toolbar), R.string.open_nav, R.string.close_nav)
-
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
+        DrawerBehavior().setDrawerOpenOnClick(drawerLayout, navigationView, this, findViewById(R.id.popular_toolbar))
 
         GlobalScope.launch {
             val movies = fetchPopularMovies()
