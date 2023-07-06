@@ -1,7 +1,7 @@
 # Movynov
 Movynov app in Kotlin for Android
 
-<h1>To run:</h1>
+<h1>To build and run:</h1>
 
 
 Clone the repo and load the project in Android Studio Flamingo.
