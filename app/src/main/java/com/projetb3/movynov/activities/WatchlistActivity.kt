@@ -30,6 +30,7 @@ class WatchlistActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         if (viewModel.getConnectedUser() == null){
             Toast.makeText(this, "Vous devez être connecté pour accéder à votre watchlist", Toast.LENGTH_LONG).show()
             val intent = Intent(this, LoginActivity::class.java)
+            finish()
             startActivity(intent)
         }
 

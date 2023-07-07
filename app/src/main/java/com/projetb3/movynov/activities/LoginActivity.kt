@@ -124,4 +124,12 @@ class LoginActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         return MenuBehavior().onNavigationItemSelected(item, this)
     }
+
+    override fun onBackPressed() {
+        if (drawerLayout.isDrawerOpen(findViewById(R.id.login_nav_view))) {
+            drawerLayout.closeDrawer(findViewById(R.id.login_nav_view))
+        } else {
+            finish()
+        }
+    }
 }
