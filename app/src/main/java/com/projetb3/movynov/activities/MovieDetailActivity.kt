@@ -65,6 +65,9 @@ class MovieDetailActivity() : AppCompatActivity() {
                 if (cast.profilePath != null){
                     cast.loadProfileImage()
                 }
+                else{
+                    cast.profileImage = resources.getDrawable(R.drawable.no_actor_picture, null)
+                }
             }
 
             runOnUiThread(Runnable {
