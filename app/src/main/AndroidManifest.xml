@@ -28,11 +28,10 @@
             android:name=".activities.WatchlistActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.RegisterActivity"
-            android:exported="false" />
-        <activity
             android:name=".activities.LoginActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="stateVisible|adjustResize"
+            />
         <activity
             android:name=".activities.PopularActivity"
             android:exported="true">
