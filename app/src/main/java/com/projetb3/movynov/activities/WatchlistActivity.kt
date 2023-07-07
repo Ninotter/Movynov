@@ -85,16 +85,28 @@ class WatchlistActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         }
     }
 
-    private fun removeFromWatchList(movie: MediaMovie): Boolean {
-        //todo /remove from watchlist
-        Toast.makeText(this, "Retiré de votre watchlist", Toast.LENGTH_LONG).show()
-        return true
+    public fun addToWatchList(movie : MediaMovie): Boolean{
+        if(WatchlistModel().addToWatchList(viewModel.getConnectedUser()?.token!!, movie.id!!)){
+            runOnUiThread(Runnable {
+                Toast.makeText(this, "Added to watchlist", Toast.LENGTH_SHORT).show()
+            })
+            return true;
+        }
+        runOnUiThread(Runnable {
+            Toast.makeText(this, "Error while adding to watchlist", Toast.LENGTH_SHORT).show()
+        })
+        return false;
     }
 
-
-    private fun addToWatchList(movie: MediaMovie) : Boolean {
-        //todo /add from watchlist
-        Toast.makeText(this, "Ajouté à votre watchlist", Toast.LENGTH_LONG).show()
+    private fun removeFromWatchList(movie: MediaMovie): Boolean {
+        if (WatchlistModel().removeFromWatchlist(viewModel.getConnectedUser()?.token!!, movie.id!!))
+        {
+            runOnUiThread(Runnable {
+                Toast.makeText(this, "Removed from watchlist", Toast.LENGTH_SHORT).show()
+            })
+            return true
+        }
+        runOnUiThread(Runnable {Toast.makeText(this, "Error while removing from watchlist", Toast.LENGTH_SHORT).show()})
         return true
     }
 

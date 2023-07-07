@@ -2,6 +2,7 @@ package com.projetb3.movynov.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.provider.MediaStore.Audio.Media
 import android.view.MenuItem
 import android.widget.ProgressBar
 import android.widget.Toast
@@ -24,7 +25,7 @@ import kotlinx.coroutines.launch
 class PopularActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var drawerLayout : DrawerLayout
     private val viewModel: MainViewModel by viewModels()
-
+    private var movies : List<MediaMovie> = listOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +46,7 @@ class PopularActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         DrawerBehavior().setDrawerOpenOnClick(drawerLayout, navigationView, this, findViewById(R.id.popular_toolbar))
 
         GlobalScope.launch {
-            val movies = fetchPopularMovies()
+            movies = fetchPopularMovies()
             for (mediaMovie in movies) {
                 mediaMovie.updatePosterImage()
                 if (viewModel.getConnectedUser() != null){
@@ -57,6 +58,21 @@ class PopularActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 val progressBar = findViewById<ProgressBar>(R.id.progress_bar_popular)
                 progressBar.visibility = ProgressBar.GONE
             })
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        //Checks again watchlist status.
+        GlobalScope.launch {
+            if (viewModel.getConnectedUser() != null){
+                for(mediaMovie in movies) {
+                    mediaMovie.checkIfIsInWatchList(viewModel.getConnectedUser()?.token)
+                }
+                runOnUiThread(Runnable {
+                    inflateRecycler(movies, viewModel.getConnectedUser())
+                })
+            }
         }
     }
 
