@@ -21,7 +21,11 @@ class MediaMovieModel {
     public fun getMovieById(id : Int) : MediaMovie{
         val urlRequest = tmdbApi + "/$id"
 
-        val response =  MovynovApiCall().executeGet(urlRequest);
+        val originalResponse =  MovynovApiCall().executeGet(urlRequest);
+        //somehow, the API returns [] instead of {} when there is no result
+        //solution for this edge case
+        val response = originalResponse.replace("[]", "{}")
+
         val mediaMovie = Gson().fromJson(response, MediaMovie::class.java)
         return mediaMovie
     }
@@ -37,7 +41,7 @@ class MediaMovieModel {
     public fun getMoviesByTitle(search : String) : List<MediaMovie>{
         val urlRequest = tmdbApi + "/searchName/$search"
 
-        val response =  MovynovApiCall().executeGet(urlRequest);
+        var response =  MovynovApiCall().executeGet(urlRequest);
         val mediaMovieList = Gson().fromJson(response, MediaMovieList::class.java)
         return mediaMovieList.results
     }

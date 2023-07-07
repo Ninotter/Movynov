@@ -85,6 +85,7 @@ class MovynovApiCall {
         val request: Request = Request.Builder()
             .url(currentUrl + url)
             .addHeader("Authorization", "Bearer $token")
+            .delete()
             .build()
 
         val call: Call = client.newCall(request)

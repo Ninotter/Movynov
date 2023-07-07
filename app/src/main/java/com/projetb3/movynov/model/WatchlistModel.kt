@@ -43,7 +43,7 @@ class WatchlistModel {
     }
 
     public fun removeFromWatchlist(token : String, idMovie: Int): Boolean {
-        val urlRequest = tmdbApi + "/$idMovie"
+        val urlRequest = tmdbApi + "/movies/$idMovie"
 
         val response =  MovynovApiCall().executeBodylessDeleteWithAuthorization(urlRequest, token)
         if (response.isSuccessful) {
