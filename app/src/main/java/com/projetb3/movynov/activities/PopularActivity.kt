@@ -39,6 +39,8 @@ class PopularActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         val navigationView = findViewById<NavigationView>(R.id.popular_nav_view)
         if (viewModel.getConnectedUser() != null){
             MenuBehavior().hideLoginMenu(navigationView, viewModel.getConnectedUser()!!)
+        }else{
+            MenuBehavior().menuForNoUser(navigationView)
         }
         DrawerBehavior().setDrawerOpenOnClick(drawerLayout, navigationView, this, findViewById(R.id.popular_toolbar))
 

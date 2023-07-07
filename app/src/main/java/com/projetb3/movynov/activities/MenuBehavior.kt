@@ -20,6 +20,14 @@ class MenuBehavior {
         navigationView.menu.findItem(R.id.nav_username).title = connectedUser.email
     }
 
+
+    fun menuForNoUser(navigationView: NavigationView) {
+        navigationView.menu.findItem(R.id.nav_logout).isVisible = false
+        navigationView.menu.findItem(R.id.nav_username).isVisible = false
+        
+
+    }
+
     public fun onNavigationItemSelected(item: MenuItem, activity : AppCompatActivity): Boolean {
         when (item.itemId) {
             R.id.nav_login -> {
@@ -40,4 +48,5 @@ class MenuBehavior {
         }
         return false
     }
+
 }
