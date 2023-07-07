@@ -10,12 +10,12 @@ import okhttp3.Response
 import org.json.JSONObject
 
 class AuthModel {
-    public fun register(email : String, password : String): Response{
+    public fun register(email : String, password : String, username : String): Response{
         //TODO
         val json = JSONObject()
         json.put("email", email)
         json.put("password", password)
-        json.put("pseudo", "TODO")
+        json.put("pseudo", username)
         json.put("spoilers", false)
         val mediaType = "application/json; charset=utf-8".toMediaType()
         val body = json.toString().toRequestBody(mediaType)

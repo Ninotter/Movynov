@@ -19,7 +19,7 @@ class MainViewModel : ViewModel(){
         val response = AuthModel().login(email, password)
         if (response.isSuccessful){
             val loginResult = Gson().fromJson(response.body!!.string(), LoginRegisterResult::class.java)
-            val user = User(email, "TODO" ,loginResult.token!!) //TODO
+            val user = User(email, loginResult.user!!.pseudo!! ,loginResult.token!!)
             setConnectedUser(user)
             return true
         }else{
@@ -27,11 +27,11 @@ class MainViewModel : ViewModel(){
         }
     }
 
-    fun register(email: String, password: String): Boolean {
-        val response = AuthModel().register(email, password)
+    fun register(email: String, password: String, username: String): Boolean {
+        val response = AuthModel().register(email, password, username)
         if (response.isSuccessful){
-            Gson().fromJson(response.body!!.string(), LoginRegisterResult::class.java)
-            val user = User(email, response.body!!.string())
+            val loginResult = Gson().fromJson(response.body!!.string(), LoginRegisterResult::class.java)
+            val user = User(email, loginResult.user!!.pseudo!! ,loginResult.token!!)
             setConnectedUser(user)
             return true
         }else{

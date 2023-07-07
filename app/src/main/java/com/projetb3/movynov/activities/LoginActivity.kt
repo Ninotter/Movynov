@@ -22,6 +22,7 @@ class LoginActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
     private lateinit var emailField : EditText
     private lateinit var passwordField : EditText
+    private lateinit var usernameField : EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +35,7 @@ class LoginActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
         emailField = findViewById(R.id.login_email)
         passwordField = findViewById(R.id.login_password)
+        usernameField = findViewById(R.id.login_username)
 
         findViewById<Button>(R.id.login_button).setOnClickListener {
             if (verifyFields()){
@@ -75,7 +77,7 @@ class LoginActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     private fun tryRegister(){
         GlobalScope.launch {
             try{
-                if(viewModel.register(emailField.text.toString(), passwordField.text.toString())){
+                if(viewModel.register(emailField.text.toString(), passwordField.text.toString(), usernameField.text.toString())){
                     afterAuth()
                 } else {
                     runOnUiThread(Runnable {

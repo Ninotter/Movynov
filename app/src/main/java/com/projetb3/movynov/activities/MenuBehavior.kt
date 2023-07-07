@@ -14,18 +14,14 @@ class MenuBehavior {
     public fun hideLoginMenu(navigationView: NavigationView, connectedUser: User) {
         navigationView.menu.findItem(R.id.nav_login).isVisible = false
         navigationView.menu.findItem(R.id.nav_logout).isVisible = true
-        navigationView.menu.findItem(R.id.nav_watchlist).isVisible = true
         navigationView.menu.findItem(R.id.nav_username).isVisible = true
-        //todo change to username
-        navigationView.menu.findItem(R.id.nav_username).title = connectedUser.email
+        navigationView.menu.findItem(R.id.nav_username).title = connectedUser.username
     }
 
 
     fun menuForNoUser(navigationView: NavigationView) {
         navigationView.menu.findItem(R.id.nav_logout).isVisible = false
         navigationView.menu.findItem(R.id.nav_username).isVisible = false
-        
-
     }
 
     public fun onNavigationItemSelected(item: MenuItem, activity : AppCompatActivity): Boolean {
