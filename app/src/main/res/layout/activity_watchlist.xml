@@ -14,6 +14,35 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ProgressBar
+            android:id="@+id/progress_bar_watchlist"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            tools:visibility="gone" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="350dp"
+            android:text="placeholder_error_text"
+            android:textSize="20dp"
+            android:textAlignment="center"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:id="@+id/watchlist_error_text"
+            android:layout_gravity="center"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="gone"
+            tools:visibility="visible"
+            />
+
+
+
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/watchlist_toolbar"
@@ -30,7 +59,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Popular"
+                android:text="Ma watchlist"
                 android:textSize="30dp" />
 
         </androidx.appcompat.widget.Toolbar>

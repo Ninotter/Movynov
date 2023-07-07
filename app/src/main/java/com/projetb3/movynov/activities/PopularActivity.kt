@@ -3,6 +3,7 @@ package com.projetb3.movynov.activities
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -51,6 +52,8 @@ class PopularActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             }
             runOnUiThread(Runnable {
                 inflateRecycler(movies, viewModel.getConnectedUser())
+                val progressBar = findViewById<ProgressBar>(R.id.progress_bar_popular)
+                progressBar.visibility = ProgressBar.GONE
             })
         }
     }

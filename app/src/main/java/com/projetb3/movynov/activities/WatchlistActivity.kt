@@ -3,6 +3,8 @@ package com.projetb3.movynov.activities
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -41,17 +43,28 @@ class WatchlistActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
         val token = viewModel.getConnectedUser()!!.token!!
         GlobalScope.launch {
-            val watchlist = WatchlistModel().getWatchlistByToken(token)
-            var listMovies :List<MediaMovie> = listOf()
-            for (watchlistresult in watchlist) {
-                val id = watchlistresult.idMedia!!
-                val movie = MediaMovieModel().getMovieById(id)
-                movie.updatePosterImage()
-                listMovies = listMovies + movie
+            try{
+                val watchlist = WatchlistModel().getWatchlistByToken(token)
+                var listMovies :List<MediaMovie> = listOf()
+                for (watchlistresult in watchlist) {
+                    val id = watchlistresult.idMedia!!
+                    val movie = MediaMovieModel().getMovieById(id)
+                    movie.updatePosterImage()
+                    movie.checkIfIsInWatchList(token)
+                    listMovies = listMovies + movie
+                }
+                runOnUiThread(Runnable {
+                    inflateRecycler(listMovies, viewModel.getConnectedUser())
+                })
+            }catch(e:Exception){
+                runOnUiThread(Runnable {
+                    val errorTextView: TextView = findViewById(R.id.watchlist_error_text)
+                    errorTextView.text = "Une erreur est survenue lors de la récupération de votre watchlist"
+                    val loadingProgressBar : ProgressBar = findViewById(R.id.progress_bar_watchlist)
+                    loadingProgressBar.visibility = ProgressBar.GONE
+                    errorTextView.visibility = TextView.VISIBLE
+                })
             }
-            runOnUiThread(Runnable {
-                inflateRecycler(listMovies, viewModel.getConnectedUser())
-            })
         }
     }
 
@@ -60,17 +73,27 @@ class WatchlistActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         val recyclerView = findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.watchlist_recycler)
         recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
         recyclerView.adapter = mediaMovieResultsAdapter
+        if (movieList.isEmpty()){
+            val errorTextView: TextView = findViewById(R.id.watchlist_error_text)
+            errorTextView.text = "Vous n'avez aucun film dans votre watchlist"
+            val loadingProgressBar : ProgressBar = findViewById(R.id.progress_bar_watchlist)
+            loadingProgressBar.visibility = ProgressBar.GONE
+            errorTextView.visibility = TextView.VISIBLE
+        }else{
+            val loadingProgressBar : ProgressBar = findViewById(R.id.progress_bar_watchlist)
+            loadingProgressBar.visibility = ProgressBar.GONE
+        }
     }
 
     private fun removeFromWatchList(movie: MediaMovie): Boolean {
-        TODO("Not yet implemented")
+        //todo /remove from watchlist
         Toast.makeText(this, "Retiré de votre watchlist", Toast.LENGTH_LONG).show()
         return true
     }
 
 
     private fun addToWatchList(movie: MediaMovie) : Boolean {
-        //todo /remove from watchlist
+        //todo /add from watchlist
         Toast.makeText(this, "Ajouté à votre watchlist", Toast.LENGTH_LONG).show()
         return true
     }

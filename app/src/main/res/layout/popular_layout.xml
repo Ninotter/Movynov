@@ -14,6 +14,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <ProgressBar
+                android:id="@+id/progress_bar_popular"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:indeterminate="true"
+                tools:visibility="gone" />
+
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/popular_toolbar"
