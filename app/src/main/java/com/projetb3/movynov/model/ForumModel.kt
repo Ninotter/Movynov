@@ -33,4 +33,12 @@ class ForumModel {
         val comments : List<ForumComment> = Gson().fromJson(response, object : TypeToken<List<ForumComment?>?>() {}.type)
         return comments
     }
+
+    fun getForumPostById(idForumPost: Int): ForumPost {
+        val urlRequest = tmdbApi + "/posts/one/$idForumPost"
+
+        val response =  MovynovApiCall().executeGet(urlRequest);
+        val post : ForumPost = Gson().fromJson(response, object : TypeToken<ForumPost?>() {}.type)
+        return post
+    }
 }

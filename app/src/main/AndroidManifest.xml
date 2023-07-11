@@ -16,6 +16,9 @@
         android:theme="@style/Movynov"
         tools:targetApi="31">
         <activity
+            android:name=".activities.ForumDetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.SearchResultsActivity"
             android:exported="false" />
         <activity
@@ -30,8 +33,7 @@
         <activity
             android:name=".activities.LoginActivity"
             android:exported="false"
-            android:windowSoftInputMode="stateVisible|adjustResize"
-            />
+            android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity
             android:name=".activities.PopularActivity"
             android:exported="true">

@@ -6,6 +6,7 @@ import android.graphics.Paint
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -138,6 +139,12 @@ class MovieDetailActivity() : AppCompatActivity() {
         inflateRecommandationsRecycler(recommandations, viewModel.getConnectedUser())
 
         InflateTrailerRecycler(movie.videos?.results!!)
+
+        findViewById<Button>(R.id.details_movies_button_forum).setOnClickListener {
+            val intent = Intent(this, ForumActivity::class.java)
+            intent.putExtra("idMovie", movie.id)
+            startActivity(intent)
+        }
     }
 
     private fun inflateWatchProvidersRecycler(flatrates : List<Flatrate>){
