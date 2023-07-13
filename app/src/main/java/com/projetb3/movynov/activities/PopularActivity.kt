@@ -16,6 +16,7 @@ import com.projetb3.movynov.dataclasses.MediaMovie
 import com.projetb3.movynov.dataclasses.auth.User
 import com.projetb3.movynov.model.MediaMovieModel
 import com.projetb3.movynov.model.WatchlistModel
+import com.projetb3.movynov.ui.SpoilerText
 import com.projetb3.movynov.viewmodels.MainViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch

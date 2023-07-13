@@ -197,13 +197,13 @@ class MovieDetailActivity() : AppCompatActivity() {
         startActivity(intent)
     }
 
-    public fun addToWatchList(movie : MediaMovie) : Boolean{
+    private fun addToWatchList(movie : MediaMovie) : Boolean{
         //TODO
         Toast.makeText(this, "Added to watchlist", Toast.LENGTH_SHORT).show()
         return true
     }
 
-    public fun navigateToMovieDetails(id : Int){
+    private fun navigateToMovieDetails(id : Int){
         //TODO
         val intent = Intent(this, MovieDetailActivity::class.java)
         intent.putExtra("id", id)

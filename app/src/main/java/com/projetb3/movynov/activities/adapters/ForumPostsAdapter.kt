@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.projetb3.movynov.R
 import com.projetb3.movynov.dataclasses.forum.ForumPost
+import com.projetb3.movynov.ui.SpoilerText
 
 class ForumPostsAdapter(
     private val forumPosts : List<ForumPost>,
@@ -23,7 +24,13 @@ class ForumPostsAdapter(
         val forumPost = forumPosts[position]
         holder.forumPostTitle.text = forumPost.title
         holder.forumPostTitleMovie.text = forumPost.movie?.title
-        holder.forumPostContent.text = forumPost.content
+        try{
+            SpoilerText().setSpoilerTextToTextView(forumPost.content!!, holder.forumPostContent)
+        }
+        catch(ex : Exception){
+            val text = forumPost.content!!.replace("||", "")
+            holder.forumPostContent.text = text
+        }
         holder.forumPostAuthorAndDate.text = "${forumPost.user?.username} - ${forumPost.createdAt}"
         holder.forumPostMessageCount.text = "${forumPost.comments?.size} commentaires"
         if (forumPost.comments?.last() == null){
