@@ -42,7 +42,7 @@ class MovieDetailActivity() : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.details_layout)
+        setContentView(R.layout.activity_movie_details)
         val intent = intent
         val idMovie = intent.getIntExtra("id", 1)
 
@@ -86,7 +86,9 @@ class MovieDetailActivity() : AppCompatActivity() {
 
 
     private fun inflateData(){
+        //Movie Title
         findViewById<TextView>(R.id.details_movie_title).text = movie.title
+        //Movie vote average
         findViewById<TextView>(R.id.details_movie_vote_average).text = movie.voteAverage.toString() + "\uD83C\uDF1F"
         //Sets the color of the rating depending on the value
         if (movie.voteAverage != null){
@@ -94,10 +96,11 @@ class MovieDetailActivity() : AppCompatActivity() {
             findViewById<TextView>(R.id.details_movie_vote_average).setTextColor(color)
             findViewById<TextView>(R.id.details_user_score_label).setTextColor(color)
         }
-        //change text of rating color mapping red to green
+        //backdrop and poster image
         findViewById<ImageView>(R.id.details_movie_backdrop).background = movie.backdropImage
         findViewById<ImageView>(R.id.details_movie_backdrop).alpha = 0.6f
         findViewById<ImageView>(R.id.details_movie_poster).background = movie.posterImage
+        //Movie tagline
         if (movie.tagline != ""){
             findViewById<TextView>(R.id.details_movie_tagline).text = "-"+ movie.tagline
             //underline tagline
@@ -105,7 +108,9 @@ class MovieDetailActivity() : AppCompatActivity() {
         }else{
             findViewById<TextView>(R.id.details_movie_tagline).visibility = View.GONE
         }
+        //Movie overview
         findViewById<TextView>(R.id.details_movie_overview).text = movie.overview
+        //Movie release date and duration
         try{
             val year = movie.releaseDate!!.substring(0, 4)
             val hours = movie.runtime!! / 60
@@ -114,6 +119,7 @@ class MovieDetailActivity() : AppCompatActivity() {
         }catch(e:Exception){
             findViewById<TextView>(R.id.details_movie_release_date_and_duration).visibility = View.GONE
         }
+        //Movie genres
         try{
             var genres = ""
             for (genre in movie.genres!!){
@@ -123,23 +129,27 @@ class MovieDetailActivity() : AppCompatActivity() {
         }catch(e:Exception){
             findViewById<TextView>(R.id.details_movie_genres).isVisible = false
         }
+        //Movie platforms
         if (movie.watchProviders?.results?.FR?.flatrate != null && movie.watchProviders?.results?.FR?.flatrate!!.isNotEmpty()){
             inflateWatchProvidersRecycler(movie.watchProviders?.results?.FR?.flatrate!!)
         }else{
             findViewById<RecyclerView>(R.id.details_movie_platforms_recyclerview).visibility = View.GONE
             findViewById<TextView>(R.id.details_movie_platforms_text).visibility = View.GONE
         }
-
+        //Movie cast
         if (movie.credits?.cast != null && movie.credits?.cast!!.isNotEmpty()){
             inflateCreditsRecycler(movie.credits?.cast!!)
         }else{
             findViewById<RecyclerView>(R.id.details_movie_platforms_recyclerview).visibility = View.GONE
             findViewById<TextView>(R.id.details_movie_platforms_text).visibility = View.GONE
         }
+        //Movie recommandations
         inflateRecommandationsRecycler(recommandations, viewModel.getConnectedUser())
 
+        //Movie trailers link list
         InflateTrailerRecycler(movie.videos?.results!!)
 
+        //Movie forums
         findViewById<Button>(R.id.details_movies_button_forum).setOnClickListener {
             val intent = Intent(this, ForumActivity::class.java)
             intent.putExtra("idMovie", movie.id)

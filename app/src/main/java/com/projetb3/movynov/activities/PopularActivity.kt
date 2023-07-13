@@ -2,7 +2,6 @@ package com.projetb3.movynov.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.provider.MediaStore.Audio.Media
 import android.view.MenuItem
 import android.widget.ProgressBar
 import android.widget.Toast
@@ -29,7 +28,7 @@ class PopularActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.popular_layout)
+        setContentView(R.layout.activity_popular)
         setSupportActionBar(findViewById(R.id.popular_toolbar))
         supportActionBar?.title = ""
 
