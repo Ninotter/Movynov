@@ -2,6 +2,8 @@ package com.projetb3.movynov.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -49,6 +51,23 @@ class ForumDetailsActivity : AppCompatActivity() {
                 findViewById<ConstraintLayout>(R.id.forum_details_layout_without_progress_bar).visibility = ConstraintLayout.VISIBLE
             })
         }
+
+        findViewById<Button>(R.id.forum_details_add_comment_button).setOnClickListener {
+            if (viewModel.getConnectedUser() == null){
+                Toast.makeText(this, "Vous devez être connecté pour ajouter un commentaire", Toast.LENGTH_LONG).show()
+            }else{
+                findViewById<Button>(R.id.forum_details_add_comment_button).visibility = Button.GONE
+                findViewById<ConstraintLayout>(R.id.forum_details_add_comment_container).visibility = ConstraintLayout.VISIBLE
+                findViewById<Button>(R.id.forum_details_add_comment_submit_button).setOnClickListener{
+                    val commentContent = findViewById<android.widget.EditText>(R.id.forum_details_add_comment_edit_text).text.toString()
+                    if (commentContent.isEmpty()){
+                        Toast.makeText(this, "Vous devez écrire un commentaire", Toast.LENGTH_LONG).show()
+                    }else{
+                        addCommentToPost()
+                    }
+                }
+            }
+        }
     }
 
     private fun inflateData(currentUser : User?) {
@@ -66,13 +85,6 @@ class ForumDetailsActivity : AppCompatActivity() {
         }
         forumPostAuthorAndDate.text = "Posté par {$forumPost.user!!.username} le ${forumPost.createdAt.toString()}"
         forumPostMovieTitle.text = forumPost.movie!!.title
-
-        if(currentUser != null){
-            val forumPostAddComment = findViewById<android.widget.Button>(R.id.forum_details_add_comment_button)
-            forumPostAddComment.setOnClickListener {
-                addCommentToPost()
-            }
-        }
     }
 
     private fun inflateRecyclerComments() {
@@ -83,9 +95,19 @@ class ForumDetailsActivity : AppCompatActivity() {
     }
 
     private fun addCommentToPost(){
-        //TODO
-        //authmodel forum call
-        //refresh()
+        GlobalScope.launch {
+            ForumModel().addCommentToForumPost(forumPost.id!!, findViewById<EditText>(R.id.forum_details_add_comment_edit_text).text.toString(),viewModel.getConnectedUser()!!.id!! , viewModel.getConnectedUser()!!.token!!)
+            runOnUiThread(Runnable {
+                Toast.makeText(this@ForumDetailsActivity, "Commentaire ajouté", Toast.LENGTH_LONG).show()
+            })
+            forumPost.updateComments()
+            runOnUiThread(Runnable {
+                findViewById<android.widget.EditText>(R.id.forum_details_add_comment_edit_text).text.clear()
+                findViewById<Button>(R.id.forum_details_add_comment_button).visibility = Button.VISIBLE
+                findViewById<ConstraintLayout>(R.id.forum_details_add_comment_container).visibility = ConstraintLayout.GONE
+                inflateRecyclerComments()
+            })
+        }
     }
 
     override fun onBackPressed() {

@@ -10,9 +10,9 @@ import android.text.style.ForegroundColorSpan
 import android.widget.TextView
 
 class SpoilerText {
+    private val spoilerTag = "||"
 
     public fun setSpoilerTextToTextView(text: String, textView : TextView) {
-        val spoilerTag = "||"
         var text = text
 
         // Save the original text without the tags
@@ -80,5 +80,9 @@ class SpoilerText {
         }
 
         textView.text = spannableString
+    }
+
+    fun containsSpoiler(commentContent: String): Boolean {
+        return commentContent.contains(spoilerTag)
     }
 }
