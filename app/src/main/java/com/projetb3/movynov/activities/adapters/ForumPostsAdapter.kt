@@ -33,7 +33,7 @@ class ForumPostsAdapter(
         }
         holder.forumPostAuthorAndDate.text = "${forumPost.user?.username} - ${forumPost.createdAt}"
         holder.forumPostMessageCount.text = "${forumPost.comments?.size} commentaires"
-        if (forumPost.comments?.last() == null){
+        if (forumPost.comments.isNullOrEmpty() || forumPost.comments?.last() == null){
             holder.forumLatestMessage.text = ""
         }else{
             holder.forumLatestMessage.text = "Dernier message : ${forumPost.comments?.last()!!.createdAt}"
