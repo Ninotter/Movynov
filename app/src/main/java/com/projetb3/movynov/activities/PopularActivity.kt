@@ -1,8 +1,13 @@
 package com.projetb3.movynov.activities
 
 import android.content.Intent
+import android.media.Image
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -45,6 +50,38 @@ class PopularActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         }
         DrawerBehavior().setDrawerOpenOnClick(drawerLayout, navigationView, this, findViewById(R.id.popular_toolbar))
 
+        val buttonSearch = findViewById<ImageView>(R.id.popular_search_button)
+        val editTextSearch = findViewById<EditText>(R.id.popular_search_edit_text)
+
+        //Search Button
+        buttonSearch.setOnClickListener {
+            if (editTextSearch.visibility == EditText.GONE){
+                editTextSearch.visibility = EditText.VISIBLE
+                //force keyboard showing
+                editTextSearch.requestFocus()
+                val inputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMethodManager.showSoftInput(editTextSearch, InputMethodManager.SHOW_IMPLICIT)
+                buttonSearch.setOnClickListener {
+                    if (editTextSearch.text.toString() != ""){
+                        onConfirmSearch()
+                    }else{
+                        editTextSearch.requestFocus()
+                    }
+                }
+            }
+        }
+        editTextSearch.setOnEditorActionListener { _, actionId, _ ->
+
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                if (editTextSearch.text.toString() != "") {
+                    buttonSearch.performClick()
+                }
+            }
+
+            true
+
+        }
+
         GlobalScope.launch {
             movies = fetchPopularMovies()
             for (mediaMovie in movies) {
@@ -59,6 +96,13 @@ class PopularActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 progressBar.visibility = ProgressBar.GONE
             })
         }
+    }
+
+    private fun onConfirmSearch() {
+        val intent = Intent(this, SearchResultsActivity::class.java)
+        val editTextSearch = findViewById<EditText>(R.id.popular_search_edit_text)
+        intent.putExtra("query", editTextSearch.text.toString())
+        startActivity(intent)
     }
 
     override fun onResume() {

@@ -29,11 +29,13 @@ class MovieListAdapter(
         holder.moviePosterImageView.background = mediaMoviesList[position].posterImage
         holder.movieTitleTextView.text = mediaMoviesList[position].title
         holder.movieOverviewTextView.text = mediaMoviesList[position].overview
+        var yearReleaseDate : String = ""
         if(mediaMoviesList[position].releaseDate!!.length < 4){
-            val yearReleaseDate = mediaMoviesList[position].releaseDate
+            yearReleaseDate = mediaMoviesList[position].releaseDate!!
         }else{
-            val yearReleaseDate = mediaMoviesList[position].releaseDate?.substring(0, 4)
+            yearReleaseDate = mediaMoviesList[position].releaseDate?.substring(0, 4)!!
         }
+        holder.movieReleaseDateTextView.text = yearReleaseDate
         holder.movieRatingTextView.text = mediaMoviesList[position].voteAverage.toString() + "\uD83C\uDF1F"
         holder.addToWatchListButton.setOnClickListener {
             onAddToWatchListClick(mediaMoviesList[position])

@@ -24,7 +24,8 @@ class MediaMovieModel {
         val originalResponse =  MovynovApiCall().executeGet(urlRequest);
         //somehow, the API returns [] instead of {} when there is no result
         //solution for this edge case
-        val response = originalResponse.replace("[]", "{}")
+        var response = originalResponse.replace("[]", "{}")
+        //TODO : Fix edge case where videos : [] instead of null
 
         val mediaMovie = Gson().fromJson(response, MediaMovie::class.java)
         return mediaMovie

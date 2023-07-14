@@ -34,4 +34,5 @@
     <string name="navbar_search">Search</string>
     <string name="hint_spoiler">Pensez à marquer vos spoilers entre des balises || : ||Spoiler||</string>
     <string name="submit_comment_button_text">Envoyer</string>
+    <string name="no_movies_found_by_search_error">Pas de films trouvés pour cette recherche</string>
 </resources>
