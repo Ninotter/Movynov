@@ -85,6 +85,7 @@ class ForumDetailsActivity : AppCompatActivity() {
         }
         forumPostAuthorAndDate.text = "Posté par {$forumPost.user!!.username} le ${forumPost.createdAt.toString()}"
         forumPostMovieTitle.text = forumPost.movie!!.title
+
     }
 
     private fun inflateRecyclerComments() {

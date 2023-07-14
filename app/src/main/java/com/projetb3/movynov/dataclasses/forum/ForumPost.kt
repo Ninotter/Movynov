@@ -18,7 +18,7 @@ class ForumPost(
     @SerializedName("createdAt"       ) var createdAt       : String?          = null,
     @SerializedName("updatedAt"       ) var updatedAt       : String?          = null
 ){
-    var comments : List<ForumComment>? = null
+    var comments : List<ForumComment>? = listOf()
     var movie : MediaMovie? = null
 
     public fun updateComments(){

@@ -47,6 +47,31 @@ class ForumModel {
         return post
     }
 
+    fun addPostToForumByMovie(idMovie : Int, title : String, content : String,  idUser : Int, tokenUser: String) : ForumPost?{
+        val urlRequest = tmdbApi + "/posts"
+
+        val containsSpoilers = SpoilerText().containsSpoiler(content)
+
+        val requestBody : RequestBody = Gson().toJson(AddPostByMovieQuery(1, idUser, title, content, idMovie, containsSpoilers)).toRequestBody()
+
+        val response =  MovynovApiCall().executePostWithAuthorization(urlRequest, requestBody, tokenUser);
+
+        if (response.isSuccessful){
+            val post : ForumPost = Gson().fromJson(response.body?.string(), object : TypeToken<ForumPost?>() {}.type)
+            return post
+        }
+        return null
+    }
+
+    private data class AddPostByMovieQuery(
+        @SerializedName("idForumCategory" ) var idForumCategory : Int,
+        @SerializedName("idUser"          ) var idUser          : Int,
+        @SerializedName("title"           ) var title           : String,
+        @SerializedName("content"         ) var content         : String,
+        @SerializedName("idMedia"         ) var idMedia         : Int,
+        @SerializedName("spoilers"        ) var spoilers        : Boolean
+    )
+
     fun addCommentToForumPost(idPost: Int, commentContent: String, idUser : Int, tokenUser: String) : Boolean{
         val urlRequest = tmdbApi + "/comments"
 
@@ -60,9 +85,9 @@ class ForumModel {
     }
 
     private data class addCommentToPostQuery(
-        @SerializedName("idForumPost" ) var idForumPost : Int?     = null,
-        @SerializedName("content"     ) var content     : String?  = null,
-        @SerializedName("idUser"      ) var idUser      : Int?     = null,
-        @SerializedName("spoilers"    ) var spoilers    : Boolean? = null
+        @SerializedName("idForumPost" ) var idForumPost : Int,
+        @SerializedName("content"     ) var content     : String,
+        @SerializedName("idUser"      ) var idUser      : Int,
+        @SerializedName("spoilers"    ) var spoilers    : Boolean
     )
 }
