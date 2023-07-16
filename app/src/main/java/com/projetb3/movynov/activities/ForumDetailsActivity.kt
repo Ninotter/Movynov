@@ -85,9 +85,9 @@ class ForumDetailsActivity : AppCompatActivity() {
             val text = forumPost.content!!.replace("||", "")
             forumPostContent.text = text
         }
-        var stringDate : String = LocalDate.parse(forumPost.createdAt!!, DateTimeFormatter.ofPattern("dd/MM/yyyy")).format(
+        var stringDate : String = LocalDate.parse(forumPost.createdAt!!.substring(0,10), DateTimeFormatter.ofPattern("yyyy-MM-dd")).format(
             DateTimeFormatter.ofPattern("dd/MM/yyyy"))
-        forumPostAuthorAndDate.text = "Posté par {$forumPost.user!!.username} le ${stringDate}"
+        forumPostAuthorAndDate.text = "Posté par ${forumPost.user!!.username} le ${stringDate}"
         forumPostMovieTitle.text = forumPost.movie!!.title
 
     }

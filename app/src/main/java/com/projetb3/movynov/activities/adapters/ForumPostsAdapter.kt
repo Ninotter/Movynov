@@ -33,7 +33,7 @@ class ForumPostsAdapter(
             val text = forumPost.content!!.replace("||", "")
             holder.forumPostContent.text = text
         }
-        var stringDate : String = LocalDate.parse(forumPost.createdAt!!, DateTimeFormatter.ofPattern("dd/MM/yyyy")).format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+        var stringDate : String = LocalDate.parse(forumPost.createdAt!!.substring(0,10), DateTimeFormatter.ofPattern("yyyy-MM-dd")).format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
         holder.forumPostAuthorAndDate.text = "${forumPost.user?.username} - ${stringDate}"
         holder.forumPostMessageCount.text = "${forumPost.comments?.size} commentaires"
         if (forumPost.comments.isNullOrEmpty() || forumPost.comments?.last() == null){

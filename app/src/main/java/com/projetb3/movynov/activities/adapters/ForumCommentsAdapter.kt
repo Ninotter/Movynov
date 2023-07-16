@@ -28,7 +28,7 @@ class ForumCommentsAdapter(private var forumComments : List<ForumComment>) : Rec
             val text = forumComment.content!!.replace("||", "")
             holder.forumCommentContent.text = text
         }
-        var stringDate : String = LocalDate.parse(forumComment.createdAt!!, DateTimeFormatter.ofPattern("dd/MM/yyyy")).format(
+        var stringDate : String = LocalDate.parse(forumComment.createdAt!!.substring(0,10), DateTimeFormatter.ofPattern("yyyy-MM-dd")).format(
             DateTimeFormatter.ofPattern("dd/MM/yyyy"))
         holder.forumCommentAuthorAndDate.text = "Commenté par " + forumComment.idUser?.username + " le " + stringDate
     }
