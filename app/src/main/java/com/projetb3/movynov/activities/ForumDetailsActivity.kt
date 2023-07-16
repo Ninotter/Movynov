@@ -18,6 +18,8 @@ import com.projetb3.movynov.ui.SpoilerText
 import com.projetb3.movynov.viewmodels.MainViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 class ForumDetailsActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()
@@ -83,7 +85,9 @@ class ForumDetailsActivity : AppCompatActivity() {
             val text = forumPost.content!!.replace("||", "")
             forumPostContent.text = text
         }
-        forumPostAuthorAndDate.text = "Posté par {$forumPost.user!!.username} le ${forumPost.createdAt.toString()}"
+        var stringDate : String = LocalDate.parse(forumPost.createdAt!!, DateTimeFormatter.ofPattern("dd/MM/yyyy")).format(
+            DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+        forumPostAuthorAndDate.text = "Posté par {$forumPost.user!!.username} le ${stringDate}"
         forumPostMovieTitle.text = forumPost.movie!!.title
 
     }

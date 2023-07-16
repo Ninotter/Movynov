@@ -20,7 +20,7 @@ class SingletonCurrentUser {
         return user
     }
 
-    public fun setUser(user : User){
+    public fun setUser(user : User?){
         this.user = user
     }
 }

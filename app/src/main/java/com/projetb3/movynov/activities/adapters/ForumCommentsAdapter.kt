@@ -7,6 +7,8 @@ import com.projetb3.movynov.R
 import com.projetb3.movynov.dataclasses.forum.ForumComment
 import com.projetb3.movynov.ui.SpoilerText
 import java.lang.Exception
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 class ForumCommentsAdapter(private var forumComments : List<ForumComment>) : RecyclerView.Adapter<ForumCommentsViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ForumCommentsViewHolder {
@@ -26,6 +28,8 @@ class ForumCommentsAdapter(private var forumComments : List<ForumComment>) : Rec
             val text = forumComment.content!!.replace("||", "")
             holder.forumCommentContent.text = text
         }
-        holder.forumCommentAuthorAndDate.text = "Commenté par " + forumComment.idUser?.username + " le " + forumComment.createdAt.toString()
+        var stringDate : String = LocalDate.parse(forumComment.createdAt!!, DateTimeFormatter.ofPattern("dd/MM/yyyy")).format(
+            DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+        holder.forumCommentAuthorAndDate.text = "Commenté par " + forumComment.idUser?.username + " le " + stringDate
     }
 }

@@ -15,7 +15,7 @@ class MovynovApiCall {
     //unit test url
     private val devBaseUrl: String = "http://127.0.0.1:8000"
 
-    private val physicalAndroidUrl: String = "http://192.168.99.76:8000"
+    private val physicalAndroidUrl: String = "http://192.168.1.245:8000"
     //prod url
     //todo : change this url to the prod url
     private val ProdUrl = ""

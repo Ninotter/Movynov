@@ -2,12 +2,16 @@ package com.projetb3.movynov.activities
 
 import android.content.Intent
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.navigation.NavigationView
 import com.projetb3.movynov.R
 import com.projetb3.movynov.dataclasses.auth.User
+import com.projetb3.movynov.singleton.SingletonCurrentUser
+import com.projetb3.movynov.viewmodels.MainViewModel
 
 class MenuBehavior {
+    val singleton : SingletonCurrentUser = SingletonCurrentUser.getInstance()
 
 
 
@@ -38,6 +42,13 @@ class MenuBehavior {
             }
             R.id.nav_watchlist ->{
                 val intent = Intent(activity, WatchlistActivity::class.java)
+                activity.startActivity(intent)
+                return true
+            }
+            R.id.nav_logout -> {
+                singleton.setUser(null)
+                val intent = Intent(activity, PopularActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 activity.startActivity(intent)
                 return true
             }

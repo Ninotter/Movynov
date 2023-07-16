@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.projetb3.movynov.R
 import com.projetb3.movynov.dataclasses.forum.ForumPost
 import com.projetb3.movynov.ui.SpoilerText
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 class ForumPostsAdapter(
     private val forumPosts : List<ForumPost>,
@@ -31,7 +33,8 @@ class ForumPostsAdapter(
             val text = forumPost.content!!.replace("||", "")
             holder.forumPostContent.text = text
         }
-        holder.forumPostAuthorAndDate.text = "${forumPost.user?.username} - ${forumPost.createdAt}"
+        var stringDate : String = LocalDate.parse(forumPost.createdAt!!, DateTimeFormatter.ofPattern("dd/MM/yyyy")).format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+        holder.forumPostAuthorAndDate.text = "${forumPost.user?.username} - ${stringDate}"
         holder.forumPostMessageCount.text = "${forumPost.comments?.size} commentaires"
         if (forumPost.comments.isNullOrEmpty() || forumPost.comments?.last() == null){
             holder.forumLatestMessage.text = ""

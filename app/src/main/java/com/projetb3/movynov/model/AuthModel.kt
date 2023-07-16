@@ -11,7 +11,6 @@ import org.json.JSONObject
 
 class AuthModel {
     public fun register(email : String, password : String, username : String): Response{
-        //TODO
         val json = JSONObject()
         json.put("email", email)
         json.put("password", password)

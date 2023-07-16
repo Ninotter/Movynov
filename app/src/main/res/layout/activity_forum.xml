@@ -53,8 +53,10 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintTop_toBottomOf="@id/forum_toolbar">
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/forum_toolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            >
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/forum_layout_without_progress_bar"
@@ -126,7 +128,7 @@
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/forum_post_submit_button"
                         android:layout_width="wrap_content"
-                        android:layout_height="30dp"
+                        android:layout_height="40dp"
                         android:layout_margin="20dp"
                         android:text="@string/submit_comment_button_text"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -141,7 +143,6 @@
                     android:layout_width="300dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center"
-                    android:layout_margin="20dp"
                     android:layout_marginEnd="30dp"
                     android:text="Ajouter un post"
                     android:textColor="@color/white"
