@@ -39,7 +39,8 @@ class ForumPostsAdapter(
         if (forumPost.comments.isNullOrEmpty() || forumPost.comments?.last() == null){
             holder.forumLatestMessage.text = ""
         }else{
-            holder.forumLatestMessage.text = "Dernier message : ${forumPost.comments?.last()!!.createdAt}"
+            var stringDateComments : String = LocalDate.parse(forumPost.comments?.last()!!.createdAt!!.substring(0,10), DateTimeFormatter.ofPattern("yyyy-MM-dd")).format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+            holder.forumLatestMessage.text = "Dernier message le ${stringDateComments}"
         }
         holder.itemView.setOnClickListener {
             onItemClick(forumPost)
