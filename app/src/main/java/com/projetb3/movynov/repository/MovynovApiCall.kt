@@ -21,7 +21,7 @@ class MovynovApiCall {
     private val ProdUrl = ""
     private val client = OkHttpClient()
     //Change accordingly to dev or prod
-    private val currentUrl = physicalAndroidUrl
+    private val currentUrl = devVirtualMachineBaseUrl
 
     public fun executeGet(optionalUrl : String) : String{
         val request = Request.Builder()
